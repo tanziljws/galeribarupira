@@ -1,0 +1,132 @@
+/* Fixes for Beranda Page Scrolling Issues */
+
+/* Ensure body allows vertical scrolling */
+body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+/* Enable smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fix hero section to allow scrolling */
+.hero-section {
+    overflow: visible !important;
+    min-height: 100vh;
+}
+
+/* Ensure all sections are scrollable */
+.main-content,
+.features-section,
+.stats-section,
+.visi-misi-section,
+.home-gallery-section,
+.agenda-section {
+    overflow: visible !important;
+}
+
+/* Fix any Bootstrap container issues */
+.container {
+    overflow: visible !important;
+}
+
+/* Ensure proper spacing for scrolling */
+section {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Fix navbar positioning */
+.navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030 !important;
+}
+
+/* Fix dropdown menu issues */
+.dropdown-menu {
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    z-index: 1040 !important;
+    background: #ffffff !important;
+    border: 1px solid #e9ecef !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    padding: 0.5rem 0 !important;
+    margin-top: 0.5rem !important;
+    min-width: 200px !important;
+}
+
+.dropdown-menu.show {
+    display: block !important;
+}
+
+.dropdown-item {
+    color: #333333 !important;
+    padding: 0.75rem 1.5rem !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+.dropdown-item:hover {
+    background: #e3f2fd !important;
+    color: #1f6fd6 !important;
+    transform: translateX(5px) !important;
+}
+
+.dropdown-item i {
+    width: 20px !important;
+    text-align: center !important;
+    margin-right: 0.5rem !important;
+}
+
+/* Ensure dropdown toggle works */
+.dropdown-toggle::after {
+    margin-left: 0.5rem !important;
+    transition: transform 0.3s ease !important;
+}
+
+.dropdown.show .dropdown-toggle::after {
+    transform: rotate(180deg) !important;
+}
+
+/* Fix mobile dropdown */
+@media (max-width: 991.98px) {
+    .dropdown-menu {
+        position: static !important;
+        float: none !important;
+        width: auto !important;
+        margin-top: 0.5rem !important;
+        box-shadow: none !important;
+        border: 1px solid #e9ecef !important;
+        border-radius: 6px !important;
+    }
+    
+    .navbar-nav .dropdown-menu {
+        margin-left: 1rem !important;
+    }
+}
+
+/* Ensure proper spacing */
+.main-content {
+    margin-top: 80px !important;
+}
+
+/* Fix any potential conflicts */
+.navbar-nav .nav-link {
+    position: relative !important;
+}
+
+.nav-item.dropdown {
+    position: relative !important;
+}

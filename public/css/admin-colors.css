@@ -1,0 +1,206 @@
+/* Admin Color Scheme - Konsisten dengan Admin Agenda */
+:root {
+    --primary-blue: #1f6fd6;
+    --secondary-blue: #0056b3;
+    --accent-purple: #8b5cf6;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --light-blue: #e3f2fd;
+    --dark-gray: #1f2937;
+    --light-gray: #6b7280;
+    --white: #ffffff;
+    --light-bg: #f8fafc;
+    --border-color: #e5e7eb;
+}
+
+/* Common Admin Styles */
+body {
+    background: var(--light-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Button Styles */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    border: none;
+    color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(31, 111, 214, 0.3);
+}
+
+.btn-success {
+    background: var(--accent-green);
+    border: none;
+    color: var(--white);
+}
+
+.btn-warning {
+    background: var(--accent-orange);
+    border: none;
+    color: var(--white);
+}
+
+.btn-danger {
+    background: var(--accent-red);
+    border: none;
+    color: var(--white);
+}
+
+.btn-info {
+    background: var(--accent-purple);
+    border: none;
+    color: var(--white);
+}
+
+/* Form Controls */
+.form-control:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.2rem rgba(31, 111, 214, 0.25);
+}
+
+/* Alert Styles */
+.alert-success {
+    background: #d1fae5;
+    color: #065f46;
+    border-left: 4px solid var(--accent-green);
+}
+
+.alert-danger {
+    background: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid var(--accent-red);
+}
+
+.alert-warning {
+    background: #fef3c7;
+    color: #92400e;
+    border-left: 4px solid var(--accent-orange);
+}
+
+.alert-info {
+    background: #e0e7ff;
+    color: #3730a3;
+    border-left: 4px solid var(--accent-purple);
+}
+
+/* Sidebar Gradient */
+.sidebar {
+    background: linear-gradient(180deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+}
+
+/* Card Headers */
+.card-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+    color: var(--white);
+}
+
+/* Table Headers */
+.table th {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+    color: var(--white);
+}
+
+/* Status Badges */
+.status-aktif {
+    background: linear-gradient(135deg, var(--accent-green), #22c55e);
+    color: var(--white);
+}
+
+.status-draft {
+    background: linear-gradient(135deg, var(--accent-orange), #f97316);
+    color: var(--white);
+}
+
+.status-selesai {
+    background: linear-gradient(135deg, var(--accent-red), #dc2626);
+    color: var(--white);
+}
+
+/* Navigation Links */
+.nav-link:hover,
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+}
+
+/* Modal Headers */
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+    color: var(--white);
+}
+
+/* Page Headers */
+.page-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-purple) 100%);
+    color: var(--white);
+}
+
+/* Statistics Cards */
+.stat-card::before {
+    background: linear-gradient(90deg, var(--primary-blue), var(--accent-purple));
+}
+
+.stat-icon.agenda {
+    background: linear-gradient(135deg, var(--accent-purple), #a855f7);
+}
+
+.stat-icon.active {
+    background: linear-gradient(135deg, var(--accent-green), #22c55e);
+}
+
+.stat-icon.upcoming {
+    background: linear-gradient(135deg, var(--accent-orange), #f97316);
+}
+
+.stat-icon.completed {
+    background: linear-gradient(135deg, var(--accent-red), #dc2626);
+}
+
+/* Action Buttons */
+.btn-view {
+    background: var(--accent-green);
+    color: var(--white);
+}
+
+.btn-edit {
+    background: var(--accent-orange);
+    color: var(--white);
+}
+
+.btn-delete {
+    background: var(--accent-red);
+    color: var(--white);
+}
+
+/* Hover Effects */
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+
+
+
+
+
+
+
+

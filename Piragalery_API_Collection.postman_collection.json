@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "piragalery-api-collection",
+		"name": "Piragalery API Collection",
+		"description": "API testing collection for Piragalery application. Contains CRUD (GET, POST, PUT, DELETE) for Users, Petugas, Kategori, Galery, Fotos, and Posts, plus Statistics.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "Get All Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {"raw": "{{base_url}}/api/stats","host": ["{{base_url}}"],"path": ["api","stats"]},
+						"description": "Get statistics for all tables (users, petugas, galery, fotos, kategori, posts)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{"name": "Get All Users","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/users","host": ["{{base_url}}"],"path": ["api","users"]}}},
+				{"name": "Get User by ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/users/1","host": ["{{base_url}}"],"path": ["api","users","1"]}}},
+				{"name": "Create New User","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"},"url": {"raw": "{{base_url}}/api/users","host": ["{{base_url}}"],"path": ["api","users"]}}},
+				{"name": "Update User (PUT)","request": {"method": "PUT","header": [{"key":"Content-Type","value":"application/json"}],"body": {"mode":"raw","raw":"{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.updated@example.com\",\n  \"password\": \"newpassword123\",\n  \"password_confirmation\": \"newpassword123\"\n}"},"url": {"raw":"{{base_url}}/api/users/1","host":["{{base_url}}"],"path":["api","users","1"]}}},
+				{"name": "Delete User","request": {"method": "DELETE","header": [],"url": {"raw": "{{base_url}}/api/users/1","host": ["{{base_url}}"],"path": ["api","users","1"]}}}
+			]
+		},
+		{
+			"name": "Petugas",
+			"item": [
+				{"name": "Get All Petugas","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/petugas","host": ["{{base_url}}"],"path": ["api","petugas"]}}},
+				{"name": "Get Petugas by ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/petugas/1","host": ["{{base_url}}"],"path": ["api","petugas","1"]}}},
+				{"name": "Create New Petugas","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"password123\",\n  \"nama\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"jabatan\": \"Staff\",\n  \"telepon\": \"08123456789\"\n}"},"url": {"raw": "{{base_url}}/api/petugas","host": ["{{base_url}}"],"path": ["api","petugas"]}}},
+				{"name": "Update Petugas (PUT)","request": {"method": "PUT","header": [{"key":"Content-Type","value":"application/json"}],"body": {"mode":"raw","raw":"{\n  \"nama\": \"John Petugas Updated\",\n  \"jabatan\": \"Supervisor\"\n}"},"url": {"raw":"{{base_url}}/api/petugas/1","host":["{{base_url}}"],"path":["api","petugas","1"]}}},
+				{"name": "Delete Petugas","request": {"method": "DELETE","header": [],"url": {"raw": "{{base_url}}/api/petugas/1","host": ["{{base_url}}"],"path": ["api","petugas","1"]}}}
+			]
+		},
+		{
+			"name": "Kategori",
+			"item": [
+				{"name": "Get All Kategori","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/kategori","host": ["{{base_url}}"],"path": ["api","kategori"]}}},
+				{"name": "Get Kategori by ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/kategori/1","host": ["{{base_url}}"],"path": ["api","kategori","1"]}}},
+				{"name": "Create New Kategori","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n  \"nama\": \"Nature\",\n  \"deskripsi\": \"Nature and landscape\",\n  \"slug\": \"nature\",\n  \"icon\": \"tree\",\n  \"color\": \"#4CAF50\"\n}"},"url": {"raw": "{{base_url}}/api/kategori","host": ["{{base_url}}"],"path": ["api","kategori"]}}},
+				{"name": "Update Kategori (PUT)","request": {"method": "PUT","header": [{"key":"Content-Type","value":"application/json"}],"body": {"mode":"raw","raw":"{\n  \"nama\": \"Nature Updated\",\n  \"color\": \"#2196F3\"\n}"},"url": {"raw":"{{base_url}}/api/kategori/1","host":["{{base_url}}"],"path":["api","kategori","1"]}}},
+				{"name": "Delete Kategori","request": {"method": "DELETE","header": [],"url": {"raw": "{{base_url}}/api/kategori/1","host": ["{{base_url}}"],"path": ["api","kategori","1"]}}}
+			]
+		},
+		{
+			"name": "Galery",
+			"item": [
+				{"name": "Get All Galery","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/galery","host": ["{{base_url}}"],"path": ["api","galery"]}}},
+				{"name": "Get Galery by ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/galery/1","host": ["{{base_url}}"],"path": ["api","galery","1"]}}},
+				{"name": "Get Photos by Galery ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/galery/1/fotos","host": ["{{base_url}}"],"path": ["api","galery","1","fotos"]}}},
+				{"name": "Create New Galery","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n  \"nama\": \"Nature Photography\",\n  \"deskripsi\": \"Beautiful nature\",\n  \"cover_image\": \"nature-cover.jpg\",\n  \"kategori_id\": 1,\n  \"user_id\": 1,\n  \"status\": \"active\"\n}"},"url": {"raw": "{{base_url}}/api/galery","host": ["{{base_url}}"],"path": ["api","galery"]}}},
+				{"name": "Update Galery (PUT)","request": {"method": "PUT","header": [{"key":"Content-Type","value":"application/json"}],"body": {"mode":"raw","raw":"{\n  \"nama\": \"Nature Photography Updated\",\n  \"status\": \"inactive\"\n}"},"url": {"raw":"{{base_url}}/api/galery/1","host":["{{base_url}}"],"path":["api","galery","1"]}}},
+				{"name": "Delete Galery","request": {"method": "DELETE","header": [],"url": {"raw": "{{base_url}}/api/galery/1","host": ["{{base_url}}"],"path": ["api","galery","1"]}}}
+			]
+		},
+		{
+			"name": "Fotos",
+			"item": [
+				{"name": "Get All Photos","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/fotos","host": ["{{base_url}}"],"path": ["api","fotos"]}}},
+				{"name": "Get Photo by ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/fotos/1","host": ["{{base_url}}"],"path": ["api","fotos","1"]}}},
+				{"name": "Get Photos by Kategori ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/fotos/kategori/1","host": ["{{base_url}}"],"path": ["api","fotos","kategori","1"]}}},
+				{"name": "Get Photos by Galery ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/fotos/galery/1","host": ["{{base_url}}"],"path": ["api","fotos","galery","1"]}}},
+				{"name": "Create New Foto","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n  \"judul\": \"Beautiful Sunset\",\n  \"deskripsi\": \"Amazing sunset\",\n  \"file_path\": \"/uploads/photos/sunset.jpg\",\n  \"file_name\": \"sunset.jpg\",\n  \"galery_id\": 1,\n  \"kategori_id\": 1,\n  \"user_id\": 1\n}"},"url": {"raw": "{{base_url}}/api/fotos","host": ["{{base_url}}"],"path": ["api","fotos"]}}},
+				{"name": "Update Foto (PUT)","request": {"method": "PUT","header": [{"key":"Content-Type","value":"application/json"}],"body": {"mode":"raw","raw":"{\n  \"judul\": \"Sunset Updated\",\n  \"likes\": 10\n}"},"url": {"raw":"{{base_url}}/api/fotos/1","host":["{{base_url}}"],"path":["api","fotos","1"]}}},
+				{"name": "Delete Foto","request": {"method": "DELETE","header": [],"url": {"raw": "{{base_url}}/api/fotos/1","host": ["{{base_url}}"],"path": ["api","fotos","1"]}}}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{"name": "Get All Posts","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/posts","host": ["{{base_url}}"],"path": ["api","posts"]}}},
+				{"name": "Get Post by ID","request": {"method": "GET","header": [],"url": {"raw": "{{base_url}}/api/posts/1","host": ["{{base_url}}"],"path": ["api","posts","1"]}}},
+				{"name": "Create New Post","request": {"method": "POST","header": [{"key": "Content-Type","value": "application/json"}],"body": {"mode": "raw","raw": "{\n  \"judul\": \"Judul Artikel\",\n  \"konten\": \"Isi konten artikel...\",\n  \"tanggal\": \"2025-08-26\",\n  \"penulis\": \"Admin\",\n  \"kategori\": \"berita\",\n  \"tags\": \"tag1,tag2\",\n  \"status\": \"published\"\n}"},"url": {"raw": "{{base_url}}/api/posts","host": ["{{base_url}}"],"path": ["api","posts"]}}},
+				{"name": "Update Post (PUT)","request": {"method": "PUT","header": [{"key":"Content-Type","value":"application/json"}],"body": {"mode":"raw","raw":"{\n  \"judul\": \"Judul Diperbarui\",\n  \"status\": \"draft\"\n}"},"url": {"raw":"{{base_url}}/api/posts/1","host":["{{base_url}}"],"path":["api","posts","1"]}}},
+				{"name": "Delete Post","request": {"method": "DELETE","header": [],"url": {"raw": "{{base_url}}/api/posts/1","host": ["{{base_url}}"],"path": ["api","posts","1"]}}}
+			]
+		}
+	],
+	"variable": [
+		{"key": "base_url","value": "http://127.0.0.1:8000","type": "string","description": "Base URL for the Laravel application"}
+	]
+}
