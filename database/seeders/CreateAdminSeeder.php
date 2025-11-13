@@ -2,29 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class CreateAdminSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // Create test user if not exists
-        if (!User::where('email', 'test@example.com')->exists()) {
-            User::factory()->create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-            ]);
-        }
-
         // Create default admin account in petugas table if not exists
         if (!DB::table('petugas')->where('username', 'admin')->exists()) {
             DB::table('petugas')->insert([
@@ -37,12 +26,12 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+            
+            $this->command->info('Admin account berhasil dibuat!');
+            $this->command->info('Username: admin');
+            $this->command->info('Password: admin123');
+        } else {
+            $this->command->info('Admin account sudah ada!');
         }
-
-        // Restore photos from storage
-        $this->call(RestorePhotosSeeder::class);
-        
-        // Restore categories, agendas, and news
-        $this->call(RestoreDataSeeder::class);
     }
 }

@@ -10,6 +10,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon.ico') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js?render=6Ld0ffcrAAAAAOtioZEl4nY5fpoJB745yD7yZesv"></script>
@@ -145,6 +146,20 @@
             margin: 0 auto;
             padding-left: 3rem;
             padding-right: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar .container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
 
         .navbar-brand {
@@ -351,6 +366,70 @@
                 margin-top: 1rem;
                 width: 100%;
             }
+
+            /* Auth buttons responsive */
+            .d-flex.align-items-center.gap-2 {
+                width: 100%;
+                flex-direction: column;
+                gap: 0.75rem !important;
+                margin-top: 1rem;
+            }
+
+            .auth-btn {
+                width: 100%;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            .btn-outline-primary {
+                width: 100%;
+            }
+        }
+
+        /* Tablet responsive */
+        @media (max-width: 768px) {
+            .auth-btn {
+                padding: 0.45rem 0.9rem !important;
+                font-size: 0.8rem !important;
+                height: 34px;
+            }
+
+            .auth-btn i {
+                font-size: 0.8rem !important;
+                margin-right: 0.25rem;
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .auth-btn {
+                padding: 0.4rem 0.8rem !important;
+                font-size: 0.75rem !important;
+                height: 32px;
+            }
+
+            .auth-btn i {
+                font-size: 0.75rem !important;
+                margin-right: 0.2rem;
+            }
+
+            .d-flex.align-items-center.gap-2 {
+                gap: 0.5rem !important;
+            }
+        }
+
+        /* Small mobile responsive */
+        @media (max-width: 360px) {
+            .auth-btn {
+                padding: 0.35rem 0.7rem !important;
+                font-size: 0.7rem !important;
+                height: 30px;
+            }
+
+            .auth-btn i {
+                font-size: 0.65rem !important;
+                margin-right: 0.15rem;
+            }
         }
 
         .dropdown-menu {
@@ -522,6 +601,8 @@
             scrollbar-width: none;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
+            width: 100%;
+            max-width: 100%;
         }
         .news-container::-webkit-scrollbar { display: none; }
         
@@ -532,6 +613,19 @@
             padding: 0 60px;
             margin: 0 auto;
             max-width: 100%;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .news-outer-wrapper {
+                padding: 0 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .news-outer-wrapper {
+                padding: 0 15px;
+            }
         }
         .news-outer-arrow {
             position: absolute;
@@ -639,8 +733,15 @@
             }
             
             .news-outer-wrapper {
-                padding: 0 50px;
+                padding: 0 45px;
                 margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .news-container {
+                width: 100%;
+                max-width: 100%;
             }
             
             .news-outer-arrow {
@@ -650,6 +751,33 @@
             
             .news-outer-arrow i {
                 font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .news-card {
+                width: 290px;
+            }
+            
+            .news-outer-wrapper {
+                padding: 0 40px;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .news-container {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .news-outer-arrow {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .news-outer-arrow i {
+                font-size: 1rem;
             }
         }
         
@@ -673,15 +801,65 @@
             .news-outer-wrapper {
                 padding: 0 40px;
                 margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .news-container {
+                width: 100%;
+                max-width: 100%;
             }
             
             .news-outer-arrow {
-                width: 38px;
-                height: 38px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .news-outer-arrow.left {
+                left: 0;
+            }
+
+            .news-outer-arrow.right {
+                right: 0;
             }
             
             .news-outer-arrow i {
-                font-size: 1rem;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 380px) {
+            .news-card {
+                width: 260px;
+            }
+            
+            .news-outer-wrapper {
+                padding: 0 35px;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .news-container {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .news-outer-arrow {
+                width: 34px;
+                height: 34px;
+            }
+
+            .news-outer-arrow.left {
+                left: 0;
+            }
+
+            .news-outer-arrow.right {
+                right: 0;
+            }
+            
+            .news-outer-arrow i {
+                font-size: 0.9rem;
             }
         }
         
@@ -918,6 +1096,13 @@
         .news-card:nth-child(6) { animation-delay: 0.6s; }
         .news-card:nth-child(7) { animation-delay: 0.7s; }
         .news-card:nth-child(8) { animation-delay: 0.8s; }
+        .news-card:nth-child(9) { animation-delay: 0.9s; }
+        .news-card:nth-child(10) { animation-delay: 1.0s; }
+        .news-card:nth-child(11) { animation-delay: 1.1s; }
+        .news-card:nth-child(12) { animation-delay: 1.2s; }
+        .news-card:nth-child(13) { animation-delay: 1.3s; }
+        .news-card:nth-child(14) { animation-delay: 1.4s; }
+        .news-card:nth-child(15) { animation-delay: 1.5s; }
 
         @keyframes fadeInUp {
             from {
@@ -1490,6 +1675,7 @@
             border-bottom: none;
             gap: 8px;
             margin-bottom: 24px;
+            flex-wrap: wrap;
         }
         
         .jurusan-detail-modern .nav-tabs .nav-link {
@@ -1502,6 +1688,7 @@
             transition: all 0.3s ease;
             border-radius: 12px;
             margin-right: 8px;
+            white-space: nowrap;
         }
         
         .jurusan-detail-modern .nav-tabs .nav-link:hover {
@@ -1524,6 +1711,184 @@
             background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
             border-radius: 12px;
             border: 2px solid #e2e8f0;
+        }
+
+        /* Responsive Media Queries untuk Modal Jurusan */
+        @media (max-width: 768px) {
+            .modal-content {
+                border-radius: 16px;
+            }
+
+            .modal-header {
+                padding: 1.5rem;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-jurusan-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .jurusan-detail-modern {
+                max-height: 500px;
+            }
+
+            .jurusan-detail-modern .nav-tabs {
+                gap: 6px;
+                margin-bottom: 16px;
+            }
+
+            .jurusan-detail-modern .nav-tabs .nav-link {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                margin-right: 4px;
+            }
+
+            .jurusan-detail-modern .tab-content {
+                padding: 16px;
+            }
+
+            .detail-list li {
+                padding: 10px 14px;
+                padding-left: 44px;
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+            }
+
+            .detail-list li::before {
+                width: 22px;
+                height: 22px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                border-radius: 12px;
+                margin: 1rem;
+            }
+
+            .modal-header {
+                padding: 1.25rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .modal-header .btn-close {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .modal-body {
+                padding: 1.25rem;
+            }
+
+            .modal-jurusan-logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 1rem;
+            }
+
+            .modal-title {
+                font-size: 1.1rem !important;
+                margin-bottom: 0.5rem;
+            }
+
+            .jurusan-detail-modern {
+                max-height: 450px;
+            }
+
+            .jurusan-detail-modern .nav-tabs {
+                gap: 4px;
+                margin-bottom: 12px;
+            }
+
+            .jurusan-detail-modern .nav-tabs .nav-link {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                margin-right: 2px;
+                flex: 1;
+                text-align: center;
+                min-width: 0;
+            }
+
+            .jurusan-detail-modern .tab-content {
+                padding: 12px;
+            }
+
+            .jurusan-detail-modern h5 {
+                font-size: 0.95rem;
+                margin-bottom: 12px;
+            }
+
+            .detail-list li {
+                padding: 8px 12px;
+                padding-left: 40px;
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+
+            .detail-list li::before {
+                width: 20px;
+                height: 20px;
+                font-size: 11px;
+                left: 12px;
+            }
+
+            .jurusan-detail-modern .alert {
+                padding: 12px;
+                margin-top: 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .modal-content {
+                margin: 0.5rem;
+            }
+
+            .modal-header {
+                padding: 1rem;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-jurusan-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .modal-title {
+                font-size: 1rem !important;
+            }
+
+            .jurusan-detail-modern .nav-tabs .nav-link {
+                padding: 6px 8px;
+                font-size: 0.7rem;
+            }
+
+            .jurusan-detail-modern .tab-content {
+                padding: 10px;
+            }
+
+            .detail-list li {
+                padding: 6px 10px;
+                padding-left: 36px;
+                font-size: 0.8rem;
+            }
+
+            .detail-list li::before {
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+                left: 10px;
+            }
         }
         
         .jurusan-detail-modern h5 {
@@ -2672,7 +3037,21 @@
         .testimoni-wrapper {
             position: relative;
             padding: 0 60px;
-            margin: 0 -60px;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .testimoni-wrapper {
+                padding: 0 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .testimoni-wrapper {
+                padding: 0 15px;
+            }
         }
         
         .testimoni-container {
@@ -2681,6 +3060,8 @@
             scrollbar-width: none;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
+            width: 100%;
+            max-width: 100%;
         }
         
         .testimoni-container::-webkit-scrollbar {
@@ -2770,7 +3151,7 @@
             background: white;
             border: 2px solid #1E40AF;
             color: #1E40AF;
-            font-size: 2rem;
+            font-size: 1.5rem;
             cursor: pointer;
             z-index: 10;
             transition: all 0.3s ease;
@@ -2785,11 +3166,11 @@
         }
         
         .testimoni-arrow.left {
-            left: -20px;
+            left: 10px;
         }
         
         .testimoni-arrow.right {
-            right: -20px;
+            right: 10px;
         }
         
         .testimoni-arrow:hover {
@@ -2801,6 +3182,84 @@
         
         .testimoni-arrow:active {
             transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Responsive Testimoni Slider */
+        @media (max-width: 768px) {
+            .testimoni-wrapper {
+                padding: 0 50px;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .testimoni-arrow {
+                width: 44px;
+                height: 44px;
+                font-size: 1.3rem;
+            }
+
+            .testimoni-arrow.left {
+                left: 5px;
+            }
+
+            .testimoni-arrow.right {
+                right: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .testimoni-wrapper {
+                padding: 0 40px;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .testimoni-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .testimoni-arrow.left {
+                left: 0px;
+            }
+
+            .testimoni-arrow.right {
+                right: 0px;
+            }
+
+            .testimoni-card-new {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .testimoni-wrapper {
+                padding: 0 35px;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .testimoni-arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 1.1rem;
+            }
+
+            .testimoni-arrow.left {
+                left: 0px;
+            }
+
+            .testimoni-arrow.right {
+                right: 0px;
+            }
+
+            .testimoni-card-new {
+                width: 260px;
+            }
         }
 
         .map-container {
@@ -3332,6 +3791,168 @@
             100% { transform: translateY(0) scale(1); }
         }
         .news-card.bump { animation: cardBump 280ms ease; }
+
+        /* Rating Modal Styles */
+        .rating-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rating-modal-backdrop.show {
+            display: flex;
+        }
+
+        .rating-modal-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            text-align: center;
+            pointer-events: auto;
+            position: relative;
+            z-index: 2001;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .rating-modal-icon {
+            font-size: 3rem;
+            color: #1E40AF;
+            margin-bottom: 1rem;
+        }
+
+        .rating-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .rating-modal-message {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            pointer-events: auto;
+            position: relative;
+            z-index: 2001;
+        }
+
+        .rating-star {
+            cursor: pointer !important;
+            color: #ddd;
+            transition: all 0.2s ease;
+            pointer-events: auto !important;
+            user-select: none;
+            -webkit-user-select: none;
+            display: inline-block;
+            position: relative;
+            z-index: 2001;
+            padding: 5px;
+            border: none !important;
+            background: none !important;
+            font-size: 2.5rem;
+            line-height: 1;
+            outline: none !important;
+            box-shadow: none !important;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: auto;
+            height: auto;
+            min-width: auto;
+            min-height: auto;
+        }
+
+        .rating-star:hover {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+
+        .rating-star.active {
+            color: #ffc107;
+        }
+
+        .rating-star:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .rating-star:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            pointer-events: auto;
+            position: relative;
+            z-index: 2001;
+        }
+
+        .rating-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            pointer-events: auto;
+            position: relative;
+            z-index: 2001;
+        }
+
+        .rating-btn-submit {
+            background: linear-gradient(135deg, #1E40AF, #3b82f6);
+            color: white;
+        }
+
+        .rating-btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+        }
+
+        .rating-btn-skip {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .rating-btn-skip:hover {
+            background: #e8e8e8;
+        }
     </style>
 </head>
 <body>
@@ -3785,8 +4406,8 @@
     <!-- Berita & Pengumuman Section -->
     <section id="news" class="content-section" style="background: #ffffff; padding: 40px 0;">
         <div class="container">
-            <h2 class="section-title" style="margin-bottom: 0.75rem;" data-aos="fade-down">Berita & Pengumuman</h2>
-            <p class="text-center text-muted mb-4" style="font-size: 1rem; font-weight: 500; color: #6b7280;" data-aos="fade-up" data-aos-delay="100">Informasi terbaru dan pengumuman penting dari SMKN 4 Bogor</p>
+            <h2 class="section-title" style="margin-bottom: 0.75rem;" data-aos="fade-down">Informasi Sekolah</h2>
+            <p class="text-center text-muted mb-4" style="font-size: 1rem; font-weight: 500; color: #6b7280;" data-aos="fade-up" data-aos-delay="100">Berita dan Pengumuman Terbaru SMKN 4 Bogor</p>
             <div class="news-outer-wrapper" data-aos="fade-up" data-aos-delay="200">
                 <button type="button" class="news-outer-arrow left" id="newsArrowLeft" aria-label="Sebelumnya" onclick="scrollNewsLeft(); return false;"><i class="bi bi-chevron-left"></i></button>
                 <div class="news-container" id="newsContainer">
@@ -3795,7 +4416,7 @@
                             @foreach($publishedNews as $item)
                                 <div class="news-card">
                                     <div class="news-image" onclick="window.location.href='{{ url('/berita/'.$item->slug) }}'">
-                                        <img src="{{ $item->image_path ? asset('storage/'.$item->image_path) : 'https://via.placeholder.com/400x250/1f6fd6/ffffff?text=Prestasi' }}" alt="{{ $item->title }}" class="img-fluid">
+                                        <img src="{{ $item->image_path ? asset('storage/'.$item->image_path) : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%221f6fd6%22 width=%22400%22 height=%22250%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EPrestasi%3C/text%3E%3C/svg%3E' }}" alt="{{ $item->title }}" class="img-fluid">
                                         @php($dt = \Carbon\Carbon::parse($item->published_at ?? $item->created_at))
                                         <div class="news-date-overlay">{{ \Carbon\Carbon::parse($item->published_at ?? $item->created_at)->format('d M Y') }}</div>
                                         <div class="news-logo"><i class="bi {{ ($item->jenis ?? 'berita') === 'pengumuman' ? 'bi-megaphone' : 'bi-newspaper' }}"></i></div>
@@ -3837,18 +4458,30 @@
                 <div class="testimoni-container" id="testimoniContainer">
                     <div class="testimoni-grid" id="testimoniGrid">
                         @if(isset($recentSuggestions) && $recentSuggestions->count() > 0)
-                            @foreach($recentSuggestions as $testimoni)
+                            @foreach($recentSuggestions as $item)
                                 <div class="testimoni-card-new">
                                     <div class="testimoni-header">
                                         <div class="testimoni-avatar-new">
                                             <i class="bi bi-person-circle"></i>
                                         </div>
                                         <div class="testimoni-info-new">
-                                            <h6 class="testimoni-name-new">{{ $testimoni->nama_lengkap }}</h6>
-                                            <small class="testimoni-date-new">{{ \Carbon\Carbon::parse($testimoni->created_at)->format('d M Y') }}</small>
+                                            <h6 class="testimoni-name-new">{{ $item->nama_lengkap }}</h6>
+                                            <small class="testimoni-date-new">{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</small>
                                         </div>
                                     </div>
-                                    <p class="testimoni-text-new">"{{ $testimoni->pesan }}"</p>
+                                    <p class="testimoni-text-new">"{{ $item->pesan }}"</p>
+                                    @if(isset($allRatings) && $allRatings->count() > 0 && ($userRating = $allRatings->first(function($r) use ($item) { return strtolower(trim($r->nama)) === strtolower(trim($item->nama_lengkap)); })))
+                                    <div class="testimoni-rating" style="margin-top: 0.75rem; display: flex; gap: 0.4rem; align-items: center;">
+                                        @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $userRating->rating)
+                                        <i class="fas fa-star" style="color: #f59e0b; font-size: 1.1rem;"></i>
+                                        @else
+                                        <i class="fas fa-star" style="color: #e2e8f0; font-size: 1.1rem;"></i>
+                                        @endif
+                                        @endfor
+                                        <span style="margin-left: 0.5rem; font-size: 0.85rem; color: #64748b; font-weight: 600;">{{ $userRating->rating }}/5</span>
+                                    </div>
+                                    @endif
                                 </div>
                             @endforeach
                         @else
@@ -3993,11 +4626,16 @@
         
         // reCAPTCHA v3 - Auto execute on page load
         grecaptcha.ready(function() {
-            console.log('reCAPTCHA v3 loaded successfully');
+            // reCAPTCHA loaded
         });
 
         // Check for success message and scroll to hubungi kami
-        @if(session('success'))
+        var hasSuccess = {{ session('success') ? 'true' : 'false' }};
+        var successMessage = '{{ session('success') ?? '' }}';
+        var hasError = {{ session('error') ? 'true' : 'false' }};
+        var errorMessage = '{{ session('error') ?? '' }}';
+        
+        if (hasSuccess) {
             document.addEventListener('DOMContentLoaded', function() {
                 // Scroll to hubungi kami section
                 const hubungiKami = document.getElementById('hubungi-kami');
@@ -4005,30 +4643,32 @@
                     hubungiKami.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
                 
-                // Show success alert after scroll
+                // Show success alert after scroll - auto close without OK button
                 setTimeout(() => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
-                        text: '{{ session('success') }}',
+                        text: successMessage,
                         confirmButtonColor: '#1E40AF',
-                        confirmButtonText: 'OK'
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true
                     });
                 }, 500);
             });
-        @endif
+        }
         
-        @if(session('error'))
+        if (hasError) {
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Akses Ditolak!',
-                    text: '{{ session('error') }}',
+                    text: errorMessage,
                     confirmButtonColor: '#1E40AF',
                     confirmButtonText: 'OK'
                 });
             });
-        @endif
+        }
         
         // Form validation with reCAPTCHA v3 for contact form
         document.addEventListener('DOMContentLoaded', function() {
@@ -4043,14 +4683,63 @@
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Memverifikasi...';
                     
+                    // Simpan nama ke variable global sebelum form di-reset
+                    window.userNamaLengkap = document.querySelector('input[name="nama_lengkap"]')?.value || 'Anonymous';
+                    
                     // Execute reCAPTCHA v3
                     grecaptcha.ready(function() {
                         grecaptcha.execute('6Ld0ffcrAAAAAOtioZEl4nY5fpoJB745yD7yZesv', {action: 'submit'}).then(function(token) {
                             // Add token to form
                             document.getElementById('g-recaptcha-response').value = token;
                             
-                            // Submit form
-                            contactForm.submit();
+                            // Submit form via AJAX
+                            const formData = new FormData(contactForm);
+                            
+                            fetch(contactForm.action, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    // Form submitted successfully
+                                    // Reset form
+                                    contactForm.reset();
+                                    submitBtn.disabled = false;
+                                    submitBtn.innerHTML = '<i class="bi bi-send me-2"></i>Kirim Pesan';
+                                    
+                                    // Show success message
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil!',
+                                        text: 'Pesan Anda berhasil dikirim. Terima kasih!',
+                                        confirmButtonColor: '#1E40AF',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        // Show rating modal after success message
+                                        setTimeout(() => {
+                                            document.getElementById('ratingModalBackdrop').classList.add('show');
+                                        }, 500);
+                                    });
+                                } else {
+                                    throw new Error('Form submission failed');
+                                }
+                            })
+                            .catch(error => {
+                                // Re-enable submit button
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = '<i class="bi bi-send me-2"></i>Kirim Pesan';
+                                
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error!',
+                                    text: 'Gagal mengirim pesan. Silakan coba lagi.',
+                                    confirmButtonColor: '#1E40AF',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
                         }).catch(function(error) {
                             // Re-enable submit button
                             submitBtn.disabled = false;
@@ -4073,7 +4762,6 @@
         function scrollNewsLeft() {
             const container = document.getElementById('newsContainer');
             if (container) {
-                console.log('SCROLLING LEFT');
                 container.scrollLeft -= 412;
                 setTimeout(showVisibleCards, 100);
             }
@@ -4082,19 +4770,33 @@
         function scrollNewsRight() {
             const container = document.getElementById('newsContainer');
             if (container) {
-                console.log('SCROLLING RIGHT');
                 container.scrollLeft += 412;
                 setTimeout(showVisibleCards, 100);
             }
         }
         
+        // Cache for performance
+        let cachedNewsCards = null;
+        let cachedNewsContainer = null;
+        
         function showVisibleCards() {
-            const container = document.getElementById('newsContainer');
-            const cards = document.querySelectorAll('.news-card');
+            // Use cached elements to avoid repeated DOM queries
+            if (!cachedNewsContainer) {
+                cachedNewsContainer = document.getElementById('newsContainer');
+            }
+            if (!cachedNewsCards) {
+                cachedNewsCards = document.querySelectorAll('.news-card');
+            }
+            
+            const container = cachedNewsContainer;
+            const cards = cachedNewsCards;
+            
+            if (!container || cards.length === 0) return;
+            
+            const containerRect = container.getBoundingClientRect();
             
             cards.forEach(card => {
                 const rect = card.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
                 
                 if (rect.left >= containerRect.left && rect.right <= containerRect.right + 100) {
                     card.classList.add('visible');
@@ -4341,19 +5043,7 @@
             startSlideshow();
         });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            const heroSection = document.querySelector('.hero-section');
-            const heroHeight = heroSection.offsetHeight;
-            
-            // Navbar berubah saat scroll melewati 80% dari tinggi hero section
-            if (window.scrollY > heroHeight * 0.8) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+        // Navbar scroll effect - REMOVED (duplicate, already handled above with debounce)
 
         // Jurusan Detail Modal Function
         function showJurusanDetail(jurusan) {
@@ -4611,11 +5301,14 @@
         }
 
         // Allow Enter key to trigger search
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
 
         // News detail function with horizontal scroll
         function openNewsDetail(newsId) {
@@ -4649,34 +5342,31 @@
             }
         }
 
-        // Enhanced horizontal scroll functionality for news section
+        // Enhanced horizontal scroll functionality for news section - OPTIMIZED
         document.addEventListener('DOMContentLoaded', function() {
-            // Scroll animation only for #fasilitas cards
-            (function initFasilitasScrollAnimation() {
-                const fasilitasSection = document.getElementById('fasilitas');
-                if (!fasilitasSection) return;
-                const items = fasilitasSection.querySelectorAll('.fasilitas-item');
-                items.forEach((item, idx) => {
-                    item.style.setProperty('--stagger', (idx * 80) + 'ms');
-                });
-                try {
-                    const io = new IntersectionObserver((entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('sa-show');
-                                entry.target.classList.remove('sa-hidden');
-                            }
-                        });
-                    }, { threshold: 0.15 });
-                    cards.forEach((c) => io.observe(c));
-                } catch (_) {
-                    // Fallback: if IO not supported, show immediately
-                    cards.forEach((c) => c.classList.add('sa-show'));
-                }
-            })();
+            // Combine all IntersectionObserver into ONE for better performance
+            try {
+                const globalObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('sa-show');
+                            entry.target.classList.remove('sa-hidden');
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.15 });
 
-            // Scroll animation for jurusan, visi-misi, news, prestasi
-            (function initOtherSectionAnimations() {
+                // Observe fasilitas items
+                const fasilitasSection = document.getElementById('fasilitas');
+                if (fasilitasSection) {
+                    const items = fasilitasSection.querySelectorAll('.fasilitas-item');
+                    items.forEach((item, idx) => {
+                        item.style.setProperty('--stagger', (idx * 80) + 'ms');
+                        globalObserver.observe(item);
+                    });
+                }
+
+                // Observe other sections
                 const map = [
                     ['jurusan', '.jurusan-card'],
                     ['visi-misi', '.visi-misi-card'],
@@ -4687,22 +5377,18 @@
                     const section = document.getElementById(id);
                     if (!section) return;
                     const items = section.querySelectorAll(selector);
-                    items.forEach((el, idx) => el.style.setProperty('--stagger', (idx * 80) + 'ms'));
-                    try {
-                        const io = new IntersectionObserver((entries) => {
-                            entries.forEach((entry) => {
-                                if (entry.isIntersecting) {
-                                    entry.target.classList.add('sa-show');
-                                    entry.target.classList.remove('sa-hidden');
-                                }
-                            });
-                        }, { threshold: 0.15 });
-                        items.forEach((el) => io.observe(el));
-                    } catch (_) {
-                        items.forEach((el) => el.classList.add('sa-show'));
-                    }
+                    items.forEach((el, idx) => {
+                        el.style.setProperty('--stagger', (idx * 80) + 'ms');
+                        globalObserver.observe(el);
+                    });
                 });
-            })();
+            } catch (_) {
+                // Fallback: show all items immediately
+                document.querySelectorAll('.fasilitas-item, .jurusan-card, .visi-misi-card, .news-grid, .prestasi-card').forEach((el) => {
+                    el.classList.add('sa-show');
+                    el.classList.add('visible');
+                });
+            }
 
             const newsGrid = document.querySelector('.news-grid');
             const newsContainer = document.querySelector('.news-container');
@@ -4712,73 +5398,60 @@
                 // Show initial visible cards
                 setTimeout(showVisibleCards, 500);
                 
-                // Listen to scroll event
+                // Debounce scroll event - only update every 100ms
+                let scrollTimeout;
                 newsContainer.addEventListener('scroll', function() {
-                    setTimeout(showVisibleCards, 50);
-                });
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(showVisibleCards, 100);
+                }, { passive: true });
                 
                 // assign stagger variable per card (index-based)
                 newsCards.forEach((card, idx) => {
                     card.style.setProperty('--stagger', ((idx % 5) * 70) + 'ms');
                 });
-                // IntersectionObserver to animate cards on enter/exit
-                try {
-                    const io = new IntersectionObserver((entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('visible');
-                            }
-                        });
-                    }, {
-                        root: newsContainer,
-                        rootMargin: '0px 100px',
-                        threshold: 0.3
-                    });
-                    newsCards.forEach((card) => io.observe(card));
-                } catch (_) {}
 
-                // Mouse drag-to-scroll (horizontal) on container
-                let isDownDrag = false;
-                let startX = 0;
-                let startScrollLeft = 0;
-                newsContainer.addEventListener('mousedown', (e) => {
-                    isDownDrag = true;
-                    newsGrid.classList.add('dragging');
-                    startX = e.pageX - newsContainer.offsetLeft;
-                    startScrollLeft = newsContainer.scrollLeft;
-                });
-                newsContainer.addEventListener('mouseleave', () => {
-                    isDownDrag = false;
-                    newsGrid.classList.remove('dragging');
-                });
-                newsContainer.addEventListener('mouseup', () => {
-                    isDownDrag = false;
-                    newsGrid.classList.remove('dragging');
-                });
-                newsContainer.addEventListener('mousemove', (e) => {
-                    if (!isDownDrag) return;
-                    e.preventDefault();
-                    const x = e.pageX - newsContainer.offsetLeft;
-                    const walk = (x - startX) * 1.2; // scroll speed factor
-                    newsContainer.scrollLeft = startScrollLeft - walk;
-                });
-
-                // Prevent vertical scrolling on news grid
-                newsContainer.addEventListener('wheel', function(e) {
-                    // Only allow horizontal scrolling
-                    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                        e.preventDefault();
-                        newsContainer.scrollLeft += e.deltaY;
-                    }
-                }, { passive: false });
-
-                // Add scroll indicators for horizontal scroll only
-                function updateScrollIndicators() {
-                    const scrollLeft = newsContainer.scrollLeft;
-                    const maxScroll = newsContainer.scrollWidth - newsContainer.clientWidth;
+                // Only enable drag-to-scroll on desktop (not mobile)
+                const isMobile = window.innerWidth <= 768;
+                if (!isMobile) {
+                    let isDownDrag = false;
+                    let startX = 0;
+                    let startScrollLeft = 0;
                     
-                    // Add visual feedback for scroll position
-                    newsCards.forEach((card, index) => {
+                    newsContainer.addEventListener('mousedown', (e) => {
+                        isDownDrag = true;
+                        newsGrid.classList.add('dragging');
+                        startX = e.pageX - newsContainer.offsetLeft;
+                        startScrollLeft = newsContainer.scrollLeft;
+                    });
+                    newsContainer.addEventListener('mouseleave', () => {
+                        isDownDrag = false;
+                        newsGrid.classList.remove('dragging');
+                    });
+                    newsContainer.addEventListener('mouseup', () => {
+                        isDownDrag = false;
+                        newsGrid.classList.remove('dragging');
+                    });
+                    newsContainer.addEventListener('mousemove', (e) => {
+                        if (!isDownDrag) return;
+                        e.preventDefault();
+                        const x = e.pageX - newsContainer.offsetLeft;
+                        const walk = (x - startX) * 1.2;
+                        newsContainer.scrollLeft = startScrollLeft - walk;
+                    });
+
+                    // Prevent vertical scrolling on news grid (desktop only)
+                    newsContainer.addEventListener('wheel', function(e) {
+                        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                            e.preventDefault();
+                            newsContainer.scrollLeft += e.deltaY;
+                        }
+                    }, { passive: false });
+                }
+
+                // Debounce scroll indicators update - only update every 150ms
+                let updateTimeout;
+                function updateScrollIndicators() {
+                    newsCards.forEach((card) => {
                         const cardRect = card.getBoundingClientRect();
                         const containerRect = newsContainer.getBoundingClientRect();
                         const isVisible = cardRect.left >= containerRect.left && cardRect.right <= containerRect.right;
@@ -4793,7 +5466,10 @@
                     });
                 }
 
-                newsContainer.addEventListener('scroll', updateScrollIndicators);
+                newsContainer.addEventListener('scroll', function() {
+                    clearTimeout(updateTimeout);
+                    updateTimeout = setTimeout(updateScrollIndicators, 150);
+                }, { passive: true });
                 
                 // Enhanced keyboard navigation for horizontal scroll
                 newsContainer.addEventListener('keydown', function(e) {
@@ -4882,7 +5558,6 @@
                 
                 if (leftBtn && container) {
                     leftBtn.onclick = function() {
-                        console.log('LEFT ARROW CLICKED!');
                         container.scrollLeft = container.scrollLeft - scrollAmount;
                         setTimeout(updateDots, 300);
                         return false;
@@ -4891,7 +5566,6 @@
                 
                 if (rightBtn && container) {
                     rightBtn.onclick = function() {
-                        console.log('RIGHT ARROW CLICKED!');
                         container.scrollLeft = container.scrollLeft + scrollAmount;
                         setTimeout(updateDots, 300);
                         return false;
@@ -4972,8 +5646,6 @@
             fetch(`/api/kategori/${categoryId}/fotos`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('API Response:', data); // Debug
-                    
                     if (data.success && data.data && data.data.fotos && data.data.fotos.length > 0) {
                         let html = '';
                         data.data.fotos.forEach(photo => {
@@ -5089,9 +5761,191 @@
             delay: 100,
         });
         
-        // Refresh AOS on window resize
+        // Refresh AOS on window resize - OPTIMIZED with debounce
+        let resizeTimeout;
         window.addEventListener('resize', function() {
-            AOS.refresh();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                AOS.refresh();
+            }, 300);
+        }, { passive: true });
+    </script>
+
+    <!-- Rating Modal -->
+    <div class="rating-modal-backdrop" id="ratingModalBackdrop">
+        <div class="rating-modal-container">
+            <div class="rating-modal-icon">
+                <i class="bi bi-star-fill"></i>
+            </div>
+            <h3 class="rating-modal-title">Bagaimana Pengalaman Anda?</h3>
+            <p class="rating-modal-message">
+                Terima kasih telah menghubungi kami. Kami ingin tahu pendapat Anda tentang website kami.
+            </p>
+            
+            <div class="rating-stars" id="ratingStars">
+                <button type="button" class="rating-star" data-rating="1">★</button>
+                <button type="button" class="rating-star" data-rating="2">★</button>
+                <button type="button" class="rating-star" data-rating="3">★</button>
+                <button type="button" class="rating-star" data-rating="4">★</button>
+                <button type="button" class="rating-star" data-rating="5">★</button>
+            </div>
+            
+            <div class="rating-buttons">
+                <button class="rating-btn rating-btn-skip" id="skipRatingBtn">
+                    Lewati
+                </button>
+                <button class="rating-btn rating-btn-submit" id="submitRatingBtn" disabled>
+                    Kirim Rating
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedRating = 0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.rating-star');
+            const submitBtn = document.getElementById('submitRatingBtn');
+            const skipBtn = document.getElementById('skipRatingBtn');
+            const ratingModalBackdrop = document.getElementById('ratingModalBackdrop');
+            const ratingStarsContainer = document.getElementById('ratingStars');
+
+            // Saat klik bintang
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-rating'));
+
+                    // Tambahkan efek aktif ke bintang yang dipilih
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= selectedRating) {
+                            s.classList.add('active');
+                            s.style.color = '#ffc107';
+                        } else {
+                            s.classList.remove('active');
+                            s.style.color = '#ddd';
+                        }
+                    });
+
+                    // Aktifkan tombol kirim
+                    submitBtn.disabled = false;
+                });
+
+                // Hover effect
+                star.addEventListener('mouseover', function() {
+                    const hoverRating = parseInt(this.getAttribute('data-rating'));
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= hoverRating) {
+                            s.style.color = '#ffc107';
+                        } else {
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+            });
+
+            // Reset hover saat mouse leave
+            if (ratingStarsContainer) {
+                ratingStarsContainer.addEventListener('mouseleave', function() {
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= selectedRating) {
+                            s.style.color = '#ffc107';
+                        } else {
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+            }
+
+            // Saat klik tombol kirim
+            submitBtn.addEventListener('click', function() {
+                if (selectedRating > 0) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Mengirim...';
+
+                    // Get CSRF token
+                    let csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+                    
+                    if (!csrfToken) {
+                        csrfToken = document.querySelector('input[name="_token"]')?.value;
+                    }
+
+                    if (!csrfToken) {
+                        const cookies = document.cookie.split(';');
+                        for (let cookie of cookies) {
+                            if (cookie.includes('XSRF-TOKEN')) {
+                                csrfToken = decodeURIComponent(cookie.split('=')[1]);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // Get nama from global variable (disimpan saat form dikirim)
+                    const nama = window.userNamaLengkap || 'Anonymous';
+                    
+                    // Send rating to server
+                    fetch('/ratings', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            rating: selectedRating,
+                            page: 'beranda',
+                            nama: nama
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Close modal
+                            if (ratingModalBackdrop) {
+                                ratingModalBackdrop.classList.remove('show');
+                            }
+                            
+                            // Reset
+                            selectedRating = 0;
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'Kirim Rating';
+                            stars.forEach(s => s.style.color = '#ddd');
+
+                            // Show success
+                            alert('Terima kasih! Rating Anda telah kami terima.');
+                        } else {
+                            throw new Error(data.message || 'Gagal mengirim rating');
+                        }
+                    })
+                    .catch(error => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Kirim Rating';
+                        alert('Error: ' + error.message);
+                    });
+                }
+            });
+
+            // Saat klik tombol lewati
+            if (skipBtn) {
+                skipBtn.addEventListener('click', function() {
+                    if (ratingModalBackdrop) {
+                        ratingModalBackdrop.classList.remove('show');
+                    }
+                    selectedRating = 0;
+                    stars.forEach(s => s.style.color = '#ddd');
+                });
+            }
+
+            // Close modal when clicking outside
+            if (ratingModalBackdrop) {
+                ratingModalBackdrop.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('show');
+                        selectedRating = 0;
+                        stars.forEach(s => s.style.color = '#ddd');
+                    }
+                });
+            }
         });
     </script>
 </body>

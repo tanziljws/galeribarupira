@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('profile_photo')->nullable()->after('email');
-            $table->text('bio')->nullable()->after('profile_photo');
+            // Only add columns if they don't exist
+            if (!Schema::hasColumn('users', 'profile_photo')) {
+                $table->string('profile_photo')->nullable()->after('email');
+            }
+            if (!Schema::hasColumn('users', 'bio')) {
+                $table->text('bio')->nullable()->after('profile_photo');
+            }
         });
     }
 
@@ -23,7 +28,16 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['profile_photo', 'bio']);
+            $columnsToDelete = [];
+            if (Schema::hasColumn('users', 'profile_photo')) {
+                $columnsToDelete[] = 'profile_photo';
+            }
+            if (Schema::hasColumn('users', 'bio')) {
+                $columnsToDelete[] = 'bio';
+            }
+            if (!empty($columnsToDelete)) {
+                $table->dropColumn($columnsToDelete);
+            }
         });
     }
 };

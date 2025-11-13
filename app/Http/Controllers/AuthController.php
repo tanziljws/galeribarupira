@@ -221,7 +221,26 @@ class AuthController extends Controller
             ]);
             
             // Kirim OTP ke email
-            Mail::to($request->email)->send(new SendOtpMail($otpCode, $request->name));
+            \Log::info('Attempting to send OTP email', [
+                'email' => $request->email,
+                'otp_code' => $otpCode,
+                'user_id' => $userId,
+                'mail_mailer' => config('mail.default'),
+                'mail_host' => config('mail.mailers.smtp.host'),
+                'mail_port' => config('mail.mailers.smtp.port'),
+            ]);
+            
+            try {
+                Mail::to($request->email)->send(new SendOtpMail($otpCode, $request->name));
+                \Log::info('OTP email sent successfully', ['email' => $request->email]);
+            } catch (\Exception $mailException) {
+                \Log::error('Failed to send OTP email', [
+                    'email' => $request->email,
+                    'error' => $mailException->getMessage(),
+                    'trace' => $mailException->getTraceAsString()
+                ]);
+                throw $mailException;
+            }
             
             // Simpan data user ke session untuk proses verifikasi
             session()->put([

@@ -27,6 +27,22 @@ class GalleryController extends Controller
 
     public function beranda()
     {
+        // Catat view activity untuk setiap kunjungan ke halaman beranda
+        // Ini digunakan untuk menghitung total pengunjung di halaman reports
+        try {
+            DB::table('gallery_activities')->insert([
+                'activity_type' => 'view',
+                'user_id' => session('user_id') ?? null,  // null jika guest/tidak login
+                'foto_id' => null,  // null karena view untuk halaman beranda, bukan foto spesifik
+                'content' => 'Kunjungan ke halaman beranda',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        } catch (\Exception $e) {
+            // Jika gagal, lanjutkan tanpa error
+            \Log::warning('Failed to record view activity: ' . $e->getMessage());
+        }
+
         // Ambil data statistik untuk halaman beranda
         $totalFotos = DB::table('foto')->count();
         $totalKategoris = DB::table('kategori')->count();
@@ -40,7 +56,7 @@ class GalleryController extends Controller
         // Ambil berita terbit dari tabel news untuk ditampilkan pada #news tanpa ubah markup
         $publishedNews = News::where('status', 'published')
             ->orderByDesc(DB::raw('COALESCE(published_at, created_at)'))
-            ->limit(8)
+            ->limit(15)
             ->get();
 
         // Ambil agenda aktif/selesai untuk seksyen agenda beranda
@@ -62,7 +78,41 @@ class GalleryController extends Controller
             ->limit(6)
             ->get();
 
-        return view('gallery.beranda', compact('totalFotos', 'totalKategoris', 'totalGaleries', 'totalPetugas', 'recentFotos', 'publishedNews', 'agendas', 'recentSuggestions', 'galleryCategories'));
+        // Ambil ratings yang sudah disetujui untuk ditampilkan di testimoni
+        $allRatings = DB::table('ratings')
+            ->where('approved', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        // Debug: Log all ratings dengan detail
+        \Log::info('=== DEBUG RATINGS ===');
+        \Log::info('Total approved ratings:', ['count' => $allRatings->count()]);
+        foreach($allRatings as $rating) {
+            \Log::info('Rating:', [
+                'id' => $rating->id,
+                'nama' => $rating->nama,
+                'rating' => $rating->rating,
+                'approved' => $rating->approved
+            ]);
+        }
+        \Log::info('=== DEBUG SUGGESTIONS ===');
+        \Log::info('Total recent suggestions:', ['count' => $recentSuggestions->count()]);
+        foreach($recentSuggestions as $suggestion) {
+            \Log::info('Suggestion:', [
+                'id' => $suggestion->id,
+                'nama_lengkap' => $suggestion->nama_lengkap,
+                'pesan' => substr($suggestion->pesan, 0, 50)
+            ]);
+            
+            // Check matching
+            $matchingRating = $allRatings->where('nama', $suggestion->nama_lengkap)->first();
+            \Log::info('Matching check for ' . $suggestion->nama_lengkap, [
+                'found' => $matchingRating ? 'YES' : 'NO',
+                'rating' => $matchingRating ? $matchingRating->rating : 'N/A'
+            ]);
+        }
+
+        return view('gallery.beranda', compact('totalFotos', 'totalKategoris', 'totalGaleries', 'totalPetugas', 'recentFotos', 'publishedNews', 'agendas', 'recentSuggestions', 'galleryCategories', 'allRatings'));
     }
 
     public function galeri()
@@ -76,13 +126,25 @@ class GalleryController extends Controller
             ->orderBy('foto.created_at', 'desc')
             ->get();
         
-        // Ambil informasi like untuk setiap foto
+        // Ambil informasi like dan views untuk setiap foto
         $fotos = $fotos->map(function($foto) use ($userId) {
             // Hitung total likes
             $foto->total_likes = DB::table('gallery_activities')
                 ->where('foto_id', $foto->id)
                 ->where('activity_type', 'like')
                 ->count();
+            
+            // Hitung total views
+            $foto->total_views = DB::table('gallery_activities')
+                ->where('foto_id', $foto->id)
+                ->where('activity_type', 'view')
+                ->distinct('user_id')
+                ->count('user_id');
+            
+            // Jika tidak ada views, set ke 0
+            if ($foto->total_views === 0) {
+                $foto->total_views = 0;
+            }
             
             // Cek apakah user ini sudah like foto ini
             $foto->is_liked_by_user = false;
@@ -91,6 +153,16 @@ class GalleryController extends Controller
                     ->where('foto_id', $foto->id)
                     ->where('user_id', $userId)
                     ->where('activity_type', 'like')
+                    ->exists();
+            }
+            
+            // Cek apakah user ini sudah bookmark foto ini
+            $foto->is_bookmarked_by_user = false;
+            if ($userId) {
+                $foto->is_bookmarked_by_user = DB::table('gallery_activities')
+                    ->where('foto_id', $foto->id)
+                    ->where('user_id', $userId)
+                    ->where('activity_type', 'bookmark')
                     ->exists();
             }
             
@@ -1434,6 +1506,17 @@ class GalleryController extends Controller
             ->orderByDesc('created_at')
             ->limit(12)
             ->get();
+
+        // Catat aktivitas view untuk halaman beranda
+        // Setiap kunjungan ke beranda dihitung sebagai 1 view
+        DB::table('gallery_activities')->insert([
+            'activity_type' => 'view',
+            'user_id' => auth()->id() ?? null,
+            'foto_id' => null, // View untuk halaman beranda, bukan foto spesifik
+            'content' => 'Kunjungan ke halaman beranda',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         return view('gallery.beranda', compact('totalFotos', 'totalKategoris', 'totalGaleries', 'totalPetugas', 'recentFotos'));
     }

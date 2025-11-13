@@ -23,11 +23,28 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('status')->default('public'); // public, private
             $table->timestamps();
-            
-            // Add foreign keys with proper error handling
-            $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('set null');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
+        
+        // Add foreign keys separately with proper error handling
+        try {
+            Schema::table('galery', function (Blueprint $table) {
+                if (Schema::hasTable('kategori')) {
+                    $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('set null');
+                }
+            });
+        } catch (\Exception $e) {
+            // Silently fail if foreign key cannot be created
+        }
+        
+        try {
+            Schema::table('galery', function (Blueprint $table) {
+                if (Schema::hasTable('users')) {
+                    $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+                }
+            });
+        } catch (\Exception $e) {
+            // Silently fail if foreign key cannot be created
+        }
     }
 
     /**
@@ -35,6 +52,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Disable foreign key checks before dropping
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('galery');
+        Schema::enableForeignKeyConstraints();
     }
 };

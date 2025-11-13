@@ -291,17 +291,39 @@
             border: 1px solid #cfc;
         }
 
-        /* Responsive Design for Mobile */
+        /* Responsive Design for Tablet */
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 15px;
                 overflow-y: auto;
             }
 
             .register-container {
-                padding: 30px 20px;
+                padding: 35px 25px;
                 border-radius: 15px;
                 max-width: 100%;
+            }
+
+            .logo-container {
+                margin-bottom: 20px;
+                gap: 12px;
+            }
+
+            .logo-container img {
+                width: 55px;
+                height: 55px;
+            }
+
+            .logo-text h2 {
+                font-size: 18px;
+            }
+
+            .logo-text p {
+                font-size: 11px;
+            }
+
+            .register-header {
+                margin-bottom: 20px;
             }
 
             .register-header h1 {
@@ -313,7 +335,7 @@
             }
 
             .form-group {
-                margin-bottom: 15px;
+                margin-bottom: 13px;
             }
 
             .form-group label {
@@ -322,8 +344,9 @@
             }
 
             .form-control {
-                padding: 10px 12px 10px 40px;
+                padding: 12px 14px 12px 42px;
                 font-size: 14px;
+                min-height: 46px;
             }
 
             .input-group i {
@@ -332,8 +355,9 @@
             }
 
             .btn-register {
-                padding: 12px;
+                padding: 13px;
                 font-size: 15px;
+                margin-top: 18px;
             }
 
             .login-link,
@@ -347,9 +371,39 @@
             }
         }
 
-        @media (max-width: 480px) {
+        /* Responsive Design for Mobile */
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+                overflow-y: auto;
+            }
+
             .register-container {
-                padding: 25px 15px;
+                padding: 28px 18px;
+                border-radius: 14px;
+                max-width: 100%;
+            }
+
+            .logo-container {
+                margin-bottom: 18px;
+                gap: 10px;
+            }
+
+            .logo-container img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-text h2 {
+                font-size: 16px;
+            }
+
+            .logo-text p {
+                font-size: 10px;
+            }
+
+            .register-header {
+                margin-bottom: 18px;
             }
 
             .register-header h1 {
@@ -360,14 +414,216 @@
                 font-size: 12px;
             }
 
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
             .form-control {
-                padding: 10px 10px 10px 38px;
+                padding: 11px 12px 11px 40px;
+                font-size: 13px;
+                min-height: 44px;
+            }
+
+            .input-group i {
+                left: 11px;
                 font-size: 13px;
             }
 
             .btn-register {
-                padding: 11px;
+                padding: 12px;
                 font-size: 14px;
+                margin-top: 16px;
+            }
+
+            .login-link,
+            .back-home {
+                font-size: 12px;
+                margin-top: 20px;
+            }
+
+            .alert {
+                padding: 9px 11px;
+                font-size: 12px;
+                margin-bottom: 16px;
+            }
+
+            .divider {
+                margin: 16px 0;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .register-container {
+                padding: 24px 16px;
+                border-radius: 13px;
+            }
+
+            .logo-container {
+                margin-bottom: 16px;
+                gap: 8px;
+            }
+
+            .logo-container img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .logo-text h2 {
+                font-size: 15px;
+            }
+
+            .logo-text p {
+                font-size: 9px;
+            }
+
+            .register-header {
+                margin-bottom: 16px;
+            }
+
+            .register-header h1 {
+                font-size: 20px;
+            }
+
+            .register-header p {
+                font-size: 11px;
+            }
+
+            .form-group {
+                margin-bottom: 11px;
+            }
+
+            .form-group label {
+                font-size: 11px;
+                margin-bottom: 4px;
+            }
+
+            .form-control {
+                padding: 10px 11px 10px 38px;
+                font-size: 12px;
+                min-height: 42px;
+            }
+
+            .input-group i {
+                left: 10px;
+                font-size: 12px;
+            }
+
+            .btn-register {
+                padding: 11px;
+                font-size: 13px;
+                margin-top: 14px;
+            }
+
+            .login-link,
+            .back-home {
+                font-size: 11px;
+                margin-top: 18px;
+            }
+
+            .alert {
+                padding: 8px 10px;
+                font-size: 11px;
+                margin-bottom: 14px;
+            }
+
+            .divider {
+                margin: 14px 0;
+                font-size: 11px;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 360px) {
+            body {
+                padding: 8px;
+            }
+
+            .register-container {
+                padding: 20px 14px;
+                border-radius: 12px;
+            }
+
+            .logo-container {
+                margin-bottom: 14px;
+                gap: 8px;
+            }
+
+            .logo-container img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-text h2 {
+                font-size: 14px;
+            }
+
+            .logo-text p {
+                font-size: 8px;
+            }
+
+            .register-header {
+                margin-bottom: 14px;
+            }
+
+            .register-header h1 {
+                font-size: 18px;
+            }
+
+            .register-header p {
+                font-size: 10px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .form-group label {
+                font-size: 10px;
+                margin-bottom: 3px;
+            }
+
+            .form-control {
+                padding: 9px 10px 9px 36px;
+                font-size: 11px;
+                min-height: 40px;
+            }
+
+            .input-group i {
+                left: 9px;
+                font-size: 11px;
+            }
+
+            .btn-register {
+                padding: 10px;
+                font-size: 12px;
+                margin-top: 12px;
+            }
+
+            .login-link,
+            .back-home {
+                font-size: 10px;
+                margin-top: 16px;
+            }
+
+            .alert {
+                padding: 7px 9px;
+                font-size: 10px;
+                margin-bottom: 12px;
+            }
+
+            .divider {
+                margin: 12px 0;
+                font-size: 10px;
             }
         }
     </style>

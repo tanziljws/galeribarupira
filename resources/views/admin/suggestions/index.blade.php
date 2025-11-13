@@ -679,8 +679,18 @@
             </div>
         </div>
 
+        <!-- Tabs Navigation -->
+        <div style="margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); display: flex; gap: 0;">
+            <button class="tab-button active" onclick="switchTab('suggestions')" style="padding: 1rem 1.5rem; border: none; background: none; color: var(--dark-color); font-weight: 600; cursor: pointer; border-bottom: 3px solid var(--primary-color); margin-bottom: -2px; transition: all 0.3s ease;">
+                <i class="fas fa-envelope"></i> Saran & Pesan
+            </button>
+            <button class="tab-button" onclick="switchTab('ratings')" style="padding: 1rem 1.5rem; border: none; background: none; color: var(--light-gray); font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.3s ease;">
+                <i class="fas fa-star"></i> Rating Bintang
+            </button>
+        </div>
+
         <!-- Suggestions Container -->
-        <div class="suggestions-container">
+        <div class="suggestions-container" id="suggestions-tab">
             @if($suggestions->count() > 0)
                 <div class="table-responsive">
                     <table class="table">
@@ -696,6 +706,10 @@
                         </thead>
                         <tbody>
                             @foreach($suggestions as $suggestion)
+                                @php
+                                    $tipe = $suggestion->tipe ?? 'suggestion';
+                                    $ratingValue = $suggestion->rating_value ?? 0;
+                                @endphp
                                 <tr>
                                     <td>
                                         <strong>{{ $suggestion->nama_lengkap }}</strong>
@@ -722,6 +736,8 @@
                                                 data-status="{{ $suggestion->status }}"
                                                 data-status-label="{{ $suggestion->status_label }}"
                                                 data-date="{{ \Carbon\Carbon::parse($suggestion->created_at)->format('d/m/Y H:i') }}"
+                                                data-type="{{ $tipe }}"
+                                                data-rating="{{ $ratingValue }}"
                                                 onclick="showDetailModal(this)">
                                                 <i class="fas fa-eye"></i>
                                                 Lihat
@@ -752,6 +768,83 @@
                     <i class="fas fa-comments fa-3x text-muted mb-3"></i>
                     <h5 class="text-muted">Belum ada saran yang masuk</h5>
                     <p class="text-muted">Saran dari pengunjung akan muncul di sini.</p>
+                </div>
+            @endif
+        </div>
+
+        <!-- Ratings Container -->
+        <div class="suggestions-container" id="ratings-tab" style="display: none;">
+            @if($ratings->count() > 0)
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px;">Rating</th>
+                                <th>Nama</th>
+                                <th>Halaman</th>
+                                <th>Tanggal</th>
+                                <th style="width: 100px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($ratings as $rating)
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; gap: 0.25rem;">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <i class="fas fa-star" style="color: {{ $i <= $rating->rating ? '#f59e0b' : '#e2e8f0' }}; font-size: 1rem;"></i>
+                                            @endfor
+                                        </div>
+                                        <span style="font-weight: 600; color: #1e293b; margin-left: 0.5rem;">{{ $rating->rating }}/5</span>
+                                    </td>
+                                    <td>
+                                        <span style="font-weight: 500; color: #1e293b;">{{ $rating->nama ?? 'Anonymous' }}</span>
+                                    </td>
+                                    <td>
+                                        <span style="background: rgba(99,102,241,0.1); color: #6366f1; padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 500; font-size: 0.85rem;">
+                                            {{ ucfirst($rating->page) }}
+                                        </span>
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($rating->created_at)->format('d/m/Y H:i') }}</td>
+                                    <td>
+                                        <div class="d-flex gap-2 align-items-center flex-wrap">
+                                            @if(!$rating->approved)
+                                                <form action="{{ route('admin.ratings.approve', $rating->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Setujui rating ini untuk ditampilkan di testimoni?')">
+                                                    @csrf
+                                                    <button type="submit" class="btn-action" style="background: #10b981; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; white-space: nowrap;">
+                                                        <i class="fas fa-check me-1"></i>Setujui
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span style="background: #d1fae5; color: #065f46; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 500; font-size: 0.85rem; white-space: nowrap;">
+                                                    <i class="fas fa-check me-1"></i>Disetujui
+                                                </span>
+                                            @endif
+                                            <form action="{{ route('admin.ratings.destroy', $rating->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus rating ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-action btn-delete" style="padding: 0.5rem 1rem;">
+                                                    <i class="fas fa-trash"></i>
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center">
+                    {{ $ratings->links() }}
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <i class="fas fa-star fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Belum ada rating yang masuk</h5>
+                    <p class="text-muted">Rating dari pengunjung akan muncul di sini.</p>
                 </div>
             @endif
         </div>
@@ -824,8 +917,10 @@
                 const status = button.getAttribute('data-status');
                 const statusLabel = button.getAttribute('data-status-label');
                 const date = button.getAttribute('data-date');
+                const type = button.getAttribute('data-type') || 'suggestion';
+                const rating = parseInt(button.getAttribute('data-rating')) || 0;
                 
-                console.log('Opening modal for suggestion:', id);
+                console.log('Opening modal for suggestion:', id, 'Type:', type);
                 
                 // Set current suggestion ID
                 currentSuggestionId = id;
@@ -833,7 +928,19 @@
                 // Update modal content
                 document.getElementById('modalName').textContent = name || 'N/A';
                 document.getElementById('modalEmail').textContent = email || 'N/A';
-                document.getElementById('modalMessage').textContent = message || 'N/A';
+                
+                // Display rating or message based on type
+                const messageElement = document.getElementById('modalMessage');
+                if (type === 'rating') {
+                    let stars = '';
+                    for (let i = 1; i <= 5; i++) {
+                        stars += i <= rating ? '★' : '☆';
+                    }
+                    messageElement.innerHTML = `<span style="color: #f59e0b; font-size: 1.5rem; font-weight: 600;">${stars} (${rating}/5)</span>`;
+                } else {
+                    messageElement.textContent = message || 'N/A';
+                }
+                
                 document.getElementById('modalDate').textContent = date || 'N/A';
                 
                 // Update status badge
@@ -1045,6 +1152,27 @@
         }
 
         // Hamburger menu toggle
+        // Tab Switching Function
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('suggestions-tab').style.display = 'none';
+            document.getElementById('ratings-tab').style.display = 'none';
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').style.display = 'block';
+
+            // Update button styles
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => {
+                btn.style.color = 'var(--light-gray)';
+                btn.style.borderBottomColor = 'transparent';
+            });
+
+            // Highlight active button
+            event.target.closest('.tab-button').style.color = 'var(--dark-color)';
+            event.target.closest('.tab-button').style.borderBottomColor = 'var(--primary-color)';
+        }
+
         const hamburger=document.getElementById('hamburgerMenu');
         const sidebar=document.querySelector('.sidebar');
         if(hamburger && sidebar){

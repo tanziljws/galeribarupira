@@ -604,9 +604,13 @@ class AdminController extends Controller
             'deskripsi' => 'nullable|string'
         ]);
         
+        // Generate slug from nama
+        $slug = \Illuminate\Support\Str::slug($request->nama);
+        
         DB::table('kategori')->insert([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
+            'slug' => $slug,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -633,9 +637,13 @@ class AdminController extends Controller
             'deskripsi' => 'nullable|string'
         ]);
         
+        // Generate slug from nama if nama changed
+        $slug = \Illuminate\Support\Str::slug($request->nama);
+        
         DB::table('kategori')->where('id', $id)->update([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
+            'slug' => $slug,
             'updated_at' => now()
         ]);
 
@@ -858,7 +866,23 @@ class AdminController extends Controller
         
         $admin = DB::table('petugas')->where('id', session('admin_id'))->first();
         
-        return view('admin.suggestions.index', compact('suggestions', 'admin', 'totalSuggestions', 'unreadCount', 'readCount', 'approvedCount', 'rejectedCount'));
+        // Get ratings data - with error handling for missing table
+        try {
+            $ratings = DB::table('ratings')
+                ->orderBy('created_at', 'desc')
+                ->paginate(20);
+        } catch (\Exception $e) {
+            // If ratings table doesn't exist, create empty paginator
+            $ratings = new \Illuminate\Pagination\LengthAwarePaginator(
+                [],
+                0,
+                20,
+                1,
+                ['path' => request()->url()]
+            );
+        }
+        
+        return view('admin.suggestions.index', compact('suggestions', 'admin', 'totalSuggestions', 'unreadCount', 'readCount', 'approvedCount', 'rejectedCount', 'ratings'));
     }
     
     public function suggestionsShow($id)
@@ -1301,6 +1325,7 @@ class AdminController extends Controller
         $totalShares = (clone $activitiesQuery)->where('activity_type', 'share')->count();
         $totalReports = (clone $activitiesQuery)->where('activity_type', 'report')->count();
         $totalViews = (clone $activitiesQuery)->where('activity_type', 'view')->count();
+        $totalDownloads = (clone $activitiesQuery)->where('activity_type', 'download')->count();
         
         // Get total photos uploaded in period
         $photosQuery = DB::table('foto');
@@ -1395,33 +1420,42 @@ class AdminController extends Controller
             ->limit(10)
             ->get();
         
-        // 5. Data Bookmark - Most bookmarked photos
-        $topBookmarkedPhotos = DB::table('gallery_activities')
-            ->join('foto', 'gallery_activities.foto_id', '=', 'foto.id')
-            ->select('foto.id', 'foto.judul', 'foto.file_path', DB::raw('count(*) as bookmark_count'))
-            ->where('gallery_activities.activity_type', 'bookmark')
-            ->when($startDate && $endDate, function($q) use ($startDate, $endDate) {
-                return $q->whereBetween('gallery_activities.created_at', [$startDate, $endDate]);
-            })
-            ->groupBy('foto.id', 'foto.judul', 'foto.file_path')
-            ->orderBy('bookmark_count', 'desc')
+        // 5. Data Bookmark & Download - Most bookmarked and downloaded photos
+        $topBookmarkedPhotos = DB::table('foto')
+            ->select(
+                'foto.id',
+                'foto.judul',
+                'foto.file_path',
+                DB::raw('(SELECT COUNT(*) FROM gallery_activities WHERE gallery_activities.foto_id = foto.id AND gallery_activities.activity_type = "bookmark" ' . 
+                    ($startDate && $endDate ? 'AND gallery_activities.created_at BETWEEN "' . $startDate . '" AND "' . $endDate . '"' : '') . 
+                    ') as bookmark_count'),
+                DB::raw('(SELECT COUNT(*) FROM gallery_activities WHERE gallery_activities.foto_id = foto.id AND gallery_activities.activity_type = "download" ' . 
+                    ($startDate && $endDate ? 'AND gallery_activities.created_at BETWEEN "' . $startDate . '" AND "' . $endDate . '"' : '') . 
+                    ') as download_count')
+            )
+            ->orderByRaw('(SELECT COUNT(*) FROM gallery_activities WHERE gallery_activities.foto_id = foto.id AND gallery_activities.activity_type = "bookmark" ' . 
+                ($startDate && $endDate ? 'AND gallery_activities.created_at BETWEEN "' . $startDate . '" AND "' . $endDate . '"' : '') . 
+                ') DESC')
             ->limit(10)
             ->get();
         
         // 6. Laporan Pengguna Aktif
         $activeUsers = DB::table('gallery_activities')
+            ->join('users', 'gallery_activities.user_id', '=', 'users.id')
             ->select(
-                'user_id',
-                DB::raw('SUM(CASE WHEN activity_type = "like" THEN 1 ELSE 0 END) as likes_given'),
-                DB::raw('SUM(CASE WHEN activity_type = "comment" THEN 1 ELSE 0 END) as comments_sent'),
-                DB::raw('SUM(CASE WHEN activity_type = "bookmark" THEN 1 ELSE 0 END) as bookmarks_created'),
+                'gallery_activities.user_id',
+                'users.name as user_name',
+                'users.email as user_email',
+                DB::raw('SUM(CASE WHEN gallery_activities.activity_type = "like" THEN 1 ELSE 0 END) as likes_given'),
+                DB::raw('SUM(CASE WHEN gallery_activities.activity_type = "comment" THEN 1 ELSE 0 END) as comments_sent'),
+                DB::raw('SUM(CASE WHEN gallery_activities.activity_type = "bookmark" THEN 1 ELSE 0 END) as bookmarks_created'),
                 DB::raw('count(*) as total_activities')
             )
             ->when($startDate && $endDate, function($q) use ($startDate, $endDate) {
-                return $q->whereBetween('created_at', [$startDate, $endDate]);
+                return $q->whereBetween('gallery_activities.created_at', [$startDate, $endDate]);
             })
-            ->whereNotNull('user_id')
-            ->groupBy('user_id')
+            ->whereNotNull('gallery_activities.user_id')
+            ->groupBy('gallery_activities.user_id', 'users.name', 'users.email')
             ->orderBy('total_activities', 'desc')
             ->limit(5)
             ->get();
@@ -1459,6 +1493,28 @@ class AdminController extends Controller
             ->orderBy('gallery_activities.created_at', 'desc')
             ->get();
         
+        // 9. Data Pengunjung - Registered vs Guest visitors
+        // Total Kunjungan Halaman Beranda = total view activities (sudah ada di $totalViews)
+        
+        // Pengunjung Terdaftar = unique users yang sudah login dan mengunjungi beranda
+        $registeredVisitors = DB::table('gallery_activities')
+            ->where('activity_type', 'view')
+            ->whereNotNull('user_id')
+            ->when($startDate && $endDate, function($q) use ($startDate, $endDate) {
+                return $q->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->distinct('user_id')
+            ->count('user_id');
+        
+        // Pengunjung Tamu (Guest) = view activities tanpa user_id (guest/tidak login)
+        $guestVisitors = DB::table('gallery_activities')
+            ->where('activity_type', 'view')
+            ->whereNull('user_id')
+            ->when($startDate && $endDate, function($q) use ($startDate, $endDate) {
+                return $q->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->count();
+        
         return view('admin.reports.index', compact(
             'filter',
             'startDate',
@@ -1469,6 +1525,7 @@ class AdminController extends Controller
             'totalShares',
             'totalReports',
             'totalViews',
+            'totalDownloads',
             'totalPhotos',
             'activitiesByType',
             'dailyActivities',
@@ -1479,7 +1536,9 @@ class AdminController extends Controller
             'topBookmarkedPhotos',
             'activeUsers',
             'topSharedPhotos',
-            'reports'
+            'reports',
+            'registeredVisitors',
+            'guestVisitors'
         ));
     }
     
@@ -1574,6 +1633,79 @@ class AdminController extends Controller
                 'success' => false,
                 'message' => 'Gagal menghapus konten: ' . $e->getMessage()
             ], 500);
+        }
+    }
+    
+    // Reply to Comment
+    public function replyComment(Request $request, $commentId)
+    {
+        try {
+            $request->validate([
+                'reply_text' => 'required|string|min:5|max:1000'
+            ]);
+            
+            // Get the original comment
+            $comment = DB::table('gallery_activities')
+                ->where('id', $commentId)
+                ->where('activity_type', 'comment')
+                ->first();
+            
+            if (!$comment) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Komentar tidak ditemukan'
+                ], 404);
+            }
+            
+            // Insert reply as a new activity with type 'comment_reply'
+            DB::table('gallery_activities')->insert([
+                'activity_type' => 'comment_reply',
+                'user_id' => session('admin_id') ? null : auth()->id(),
+                'foto_id' => $comment->foto_id,
+                'content' => $request->reply_text,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            
+            // Optional: Send notification to user who commented
+            // You can implement email notification here
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Balasan berhasil dikirim ke user'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengirim balasan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    
+    // Approve Rating to show in testimonials
+    public function approveRating($id)
+    {
+        try {
+            DB::table('ratings')->where('id', $id)->update([
+                'approved' => true,
+                'updated_at' => now()
+            ]);
+            
+            return redirect()->route('admin.suggestions')->with('success', 'Rating disetujui dan akan ditampilkan di testimoni');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.suggestions')->with('error', 'Gagal menyetujui rating: ' . $e->getMessage());
+        }
+    }
+    
+    // Delete Rating
+    public function destroyRating($id)
+    {
+        try {
+            DB::table('ratings')->where('id', $id)->delete();
+            
+            return redirect()->route('admin.suggestions')->with('success', 'Rating berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.suggestions')->with('error', 'Gagal menghapus rating: ' . $e->getMessage());
         }
     }
 }

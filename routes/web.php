@@ -5,6 +5,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OtpController;
+use App\Http\Controllers\RatingController;
 
 Route::get('/', [GalleryController::class, 'beranda'])->name('home');
 
@@ -147,6 +148,9 @@ Route::get('/kontak', [GalleryController::class, 'kontak'])->name('gallery.konta
 // Suggestion submission from frontend
 Route::post('/suggestions', [AdminController::class, 'suggestionsStore'])->name('suggestions.store');
 
+// Rating submission from frontend
+Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
+
 // CRUD Routes untuk Foto
 Route::middleware(['web'])->group(function () {
     Route::post('/foto', [GalleryController::class, 'storeFoto'])->name('foto.store');
@@ -232,8 +236,6 @@ Route::middleware(['check.admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/photos', [AdminController::class, 'photosIndex'])->name('admin.photos');
     Route::get('/admin/photos/index', [AdminController::class, 'photosIndex'])->name('admin.photos.index');
-    Route::get('/admin/agenda', [AdminController::class, 'agendaIndex'])->name('admin.agenda');
-    Route::get('/admin/agenda/index', [AdminController::class, 'agendaIndex'])->name('admin.agenda.index');
     Route::get('/admin/suggestions', [AdminController::class, 'suggestionsIndex'])->name('admin.suggestions');
     Route::get('/admin/petugas', [AdminController::class, 'petugasIndex'])->name('admin.petugas');
     Route::get('/admin/petugas/index', [AdminController::class, 'petugasIndex'])->name('admin.petugas.index');
@@ -241,19 +243,25 @@ Route::middleware(['check.admin'])->group(function () {
     Route::post('/admin/reports/{id}/complete', [AdminController::class, 'reportMarkCompleted'])->name('admin.reports.complete');
     Route::delete('/admin/reports/{id}', [AdminController::class, 'reportDelete'])->name('admin.reports.delete');
     Route::post('/admin/reports/{id}/delete-content', [AdminController::class, 'reportDeleteContent'])->name('admin.reports.delete-content');
+    Route::post('/admin/comments/{id}/reply', [AdminController::class, 'replyComment'])->name('admin.comments.reply');
 
-    // CRUD operations
+    // CRUD operations - Agenda (specific routes first, with constraints)
+    Route::post('/admin/agenda', [AdminController::class, 'agendaStore'])->name('admin.agenda.store');
+    Route::get('/admin/agenda/index', [AdminController::class, 'agendaIndex'])->name('admin.agenda.index');
+    Route::get('/admin/agenda/{id}', [AdminController::class, 'agendaShow'])->name('admin.agenda.show')->where('id', '[0-9]+');
+    Route::put('/admin/agenda/{id}', [AdminController::class, 'agendaUpdate'])->name('admin.agenda.update')->where('id', '[0-9]+');
+    Route::post('/admin/agenda/{id}/toggle-status', [AdminController::class, 'agendaToggleStatus'])->name('admin.agenda.toggleStatus')->where('id', '[0-9]+');
+    Route::delete('/admin/agenda/{id}', [AdminController::class, 'agendaDestroy'])->name('admin.agenda.destroy')->where('id', '[0-9]+');
+    Route::delete('/admin/agenda/{id}/delete', [AdminController::class, 'agendaDestroy'])->name('admin.agenda.delete')->where('id', '[0-9]+');
+    
+    // Agenda Index (general routes)
+    Route::get('/admin/agenda', [AdminController::class, 'agendaIndex'])->name('admin.agenda');
+
+    // CRUD operations - Photos
     Route::get('/admin/photos/{id}/edit', [AdminController::class, 'photosEdit'])->name('admin.photos.edit');
     Route::post('/admin/photos', [AdminController::class, 'photosStore'])->name('admin.photos.store');
     Route::put('/admin/photos/{id}', [AdminController::class, 'photosUpdate'])->name('admin.photos.update');
     Route::delete('/admin/photos/{id}', [AdminController::class, 'photosDelete'])->name('admin.photos.delete');
-
-    Route::post('/admin/agenda', [AdminController::class, 'agendaStore'])->name('admin.agenda.store');
-    Route::get('/admin/agenda/{id}', [AdminController::class, 'agendaShow'])->name('admin.agenda.show');
-    Route::put('/admin/agenda/{id}', [AdminController::class, 'agendaUpdate'])->name('admin.agenda.update');
-    Route::post('/admin/agenda/{id}/toggle-status', [AdminController::class, 'agendaToggleStatus'])->name('admin.agenda.toggleStatus');
-    Route::delete('/admin/agenda/{id}', [AdminController::class, 'agendaDestroy'])->name('admin.agenda.destroy');
-    Route::delete('/admin/agenda/{id}/delete', [AdminController::class, 'agendaDestroy'])->name('admin.agenda.delete');
 
     Route::post('/admin/suggestions', [AdminController::class, 'suggestionsStore'])->name('admin.suggestions.store');
     Route::post('/admin/suggestions/{id}/status', [AdminController::class, 'suggestionsUpdateStatus'])->name('admin.suggestions.updateStatus');
@@ -263,6 +271,8 @@ Route::middleware(['check.admin'])->group(function () {
     Route::put('/admin/suggestions/{id}', [AdminController::class, 'suggestionsUpdate'])->name('admin.suggestions.update');
     Route::delete('/admin/suggestions/{id}', [AdminController::class, 'suggestionsDestroy'])->name('admin.suggestions.destroy');
     Route::delete('/admin/suggestions/{id}/delete', [AdminController::class, 'suggestionsDestroy'])->name('admin.suggestions.delete');
+    Route::post('/admin/ratings/{id}/approve', [AdminController::class, 'approveRating'])->name('admin.ratings.approve');
+    Route::delete('/admin/ratings/{id}', [AdminController::class, 'destroyRating'])->name('admin.ratings.destroy');
 
     Route::post('/admin/petugas', [AdminController::class, 'petugasStore'])->name('admin.petugas.store');
     Route::put('/admin/petugas/{id}', [AdminController::class, 'petugasUpdate'])->name('admin.petugas.update');

@@ -529,6 +529,7 @@
             padding-top: 1.2rem;
             border-top: 1px solid #e5e7eb;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         /* Baris meta agar rapi dan sejajar */
@@ -539,31 +540,35 @@
             color: #475569;
             font-weight: 600;
             white-space: nowrap;
+            font-size: 0.9rem;
         }
         .meta-item i {
             color: #1E40AF;
+            flex-shrink: 0;
         }
 
         /* Lokasi boleh membungkus baris agar tidak terpotong */
         .meta-item.location {
             white-space: normal;
             word-break: break-word;
-            flex: 1 1 240px;
+            flex: 1 1 auto;
             line-height: 1.3;
+            min-width: 0;
         }
 
         /* Pastikan badge status terdorong ke kanan */
         .agenda-status {
             margin-left: auto;
+            flex-shrink: 0;
         }
         
         .agenda-status {
-            padding: 0.5rem 1.2rem;
+            padding: 0.35rem 0.9rem;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
+            letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
@@ -728,7 +733,7 @@
             }
             
             .agenda-card { 
-                min-height: 220px !important; 
+                min-height: auto !important; 
                 padding: 1.5rem;
                 border-radius: 20px;
             }
@@ -736,25 +741,42 @@
             .agenda-header { 
                 margin-bottom: 1rem; 
                 flex: 1; 
-                min-height: 60px; 
+                min-height: auto; 
             }
             
             .agenda-icon {
                 width: 56px;
                 height: 56px;
                 font-size: 1.5rem;
+                flex-shrink: 0;
             }
             
             .agenda-title {
                 font-size: 1.1rem;
+                word-break: break-word;
             }
             
             .agenda-meta { 
                 margin-top: auto; 
-                min-height: 20px;
+                min-height: auto;
                 flex-direction: row;
                 align-items: center;
-                flex-wrap: nowrap;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .meta-item {
+                font-size: 0.85rem;
+                flex-wrap: wrap;
+            }
+
+            .meta-item.location {
+                flex: 1 1 100%;
+                min-width: 0;
+            }
+
+            .agenda-status {
+                flex: 0 0 auto;
             }
             
             .agenda-toolbar {
@@ -801,7 +823,7 @@
             }
             
             .agenda-card { 
-                min-height: 200px !important; 
+                min-height: auto !important; 
                 padding: 1.2rem;
                 border-radius: 18px;
             }
@@ -809,7 +831,7 @@
             .agenda-header {
                 margin-bottom: 1rem;
                 flex: 1;
-                min-height: 60px;
+                min-height: auto;
                 gap: 0.8rem;
             }
             
@@ -817,18 +839,37 @@
                 width: 48px;
                 height: 48px;
                 font-size: 1.4rem;
+                flex-shrink: 0;
             }
             
             .agenda-title {
                 font-size: 1rem;
+                word-break: break-word;
             }
             
             .agenda-meta {
                 padding-top: 1rem;
                 flex-direction: row;
                 align-items: center;
-                gap: 0.6rem;
-                flex-wrap: nowrap;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+
+            .meta-item {
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+            }
+
+            .meta-item.location {
+                flex: 1 1 100%;
+                min-width: 0;
+                order: 3;
+            }
+
+            .agenda-status {
+                flex: 0 0 auto;
+                order: 2;
             }
             
             .agenda-toolbar {
@@ -874,6 +915,229 @@
         
         .agenda-keterangan p {
             margin: 0;
+        }
+
+        /* Modal Styles */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .agenda-modal .modal-content {
+            border: none;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .agenda-modal .modal-header {
+            border: none;
+            padding: 2rem 2rem 1rem 2rem;
+            background: linear-gradient(135deg, #1E40AF 0%, #1e3a8a 100%);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .agenda-modal .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .agenda-modal .modal-header .btn-close:hover {
+            opacity: 1;
+        }
+
+        .agenda-modal .modal-title {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .agenda-modal .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-agenda-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .modal-agenda-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e0efff 100%);
+            display: grid;
+            place-items: center;
+            font-size: 2.2rem;
+            color: #1E40AF;
+            border: 2px solid rgba(37, 99, 235, 0.15);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+            flex-shrink: 0;
+        }
+
+        .modal-agenda-info {
+            flex: 1;
+        }
+
+        .modal-agenda-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-agenda-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .modal-detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-detail-section h5 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .modal-detail-section h5 i {
+            color: #1E40AF;
+            font-size: 1.3rem;
+        }
+
+        .modal-detail-content {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 12px;
+            border-left: 4px solid #1E40AF;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .modal-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-meta-item {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e0efff 100%);
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        .modal-meta-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #1E40AF;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-meta-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .modal-status-badge {
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-status-upcoming {
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .modal-status-completed {
+            background: linear-gradient(90deg, #9ca3af 0%, #6b7280 50%, #4b5563 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        .modal-agenda-footer {
+            display: flex;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .btn-modal-close {
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            background: #e5e7eb;
+            color: #1a202c;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-close:hover {
+            background: #d1d5db;
+            transform: translateY(-2px);
+        }
+
+        .btn-modal-action {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #1E40AF 0%, #1e3a8a 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-selengkapnya {
+            background: transparent;
+            color: #1E40AF;
+            border: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-selengkapnya:hover {
+            text-decoration: underline;
+            color: #1e3a8a;
         }
         
         /* Animation for cards */
@@ -1012,7 +1276,7 @@
                             $displaySelesai = $waktuSelesai ? \Carbon\Carbon::parse($waktuSelesai)->format('H:i') : null;
                         @endphp
                         
-                        <div class="agenda-card {{ $tipe }}" data-status="{{ $isUpcoming ? 'upcoming' : 'completed' }}" data-title="{{ strtolower($judul) }}">
+                        <div class="agenda-card {{ $tipe }}" data-status="{{ $isUpcoming ? 'upcoming' : 'completed' }}" data-title="{{ strtolower($judul) }}" data-agenda-id="{{ $agenda->id }}" style="cursor: pointer;">
                             <div class="agenda-header">
                                 <div class="agenda-icon"><i class="{{ $icon }}"></i></div>
                                 <h4 class="agenda-title">{{ $judul }}</h4>
@@ -1037,9 +1301,11 @@
                                     <span>{{ $agenda->lokasi }}</span>
                                 </div>
                                 @endif
-                                <span class="agenda-status status-{{ $isUpcoming ? 'upcoming' : 'completed' }}">
-                                    {{ $isUpcoming ? 'Akan Datang' : 'Selesai' }}
-                                </span>
+                                <div style="display: flex; gap: 0.8rem; align-items: center; margin-left: auto;">
+                                    <span class="agenda-status status-{{ $isUpcoming ? 'upcoming' : 'completed' }}">
+                                        {{ $isUpcoming ? 'Akan Datang' : 'Selesai' }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -1078,6 +1344,136 @@
             
         </div>
     </div>
+
+    <!-- Modal untuk Detail Agenda -->
+    @if($agendas->count() > 0)
+        @foreach($agendas as $agenda)
+            @php
+                $isUpcoming = $agenda->tanggal >= now()->toDateString();
+                $statusClass = $isUpcoming ? 'modal-status-upcoming' : 'modal-status-completed';
+                $statusText = $isUpcoming ? 'Akan Datang' : 'Selesai';
+                
+                $icon = 'bi bi-calendar-event';
+                if($agenda->tipe) {
+                    switch($agenda->tipe) {
+                        case 'pensi':
+                            $icon = 'bi bi-music-note-beamed';
+                            break;
+                        case 'transforkrab':
+                            $icon = 'bi bi-bus-front';
+                            break;
+                        case 'p5':
+                            $icon = 'bi bi-stars';
+                            break;
+                        case 'mountor':
+                            $icon = 'bi bi-activity';
+                            break;
+                        case 'classmet':
+                        case 'classmeeting':
+                            $icon = 'bi bi-people';
+                            break;
+                        case 'lomba-17-agustus':
+                            $icon = 'bi bi-flag';
+                            break;
+                    }
+                }
+                
+                $displayMulai = $agenda->waktu_mulai ? \Carbon\Carbon::parse($agenda->waktu_mulai)->format('H:i') : null;
+                $displaySelesai = $agenda->waktu_selesai ? \Carbon\Carbon::parse($agenda->waktu_selesai)->format('H:i') : null;
+            @endphp
+            
+            <div class="modal fade agenda-modal" id="agendaModal{{ $agenda->id }}" tabindex="-1" aria-labelledby="agendaModalLabel{{ $agenda->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="agendaModalLabel{{ $agenda->id }}">Detail Agenda</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Status Badge -->
+                            <span class="modal-status-badge {{ $statusClass }}">
+                                {{ $statusText }}
+                            </span>
+
+                            <!-- Header dengan Icon dan Judul -->
+                            <div class="modal-agenda-header">
+                                <div class="modal-agenda-icon">
+                                    <i class="{{ $icon }}"></i>
+                                </div>
+                                <div class="modal-agenda-info">
+                                    <h3 class="modal-agenda-title">{{ $agenda->judul }}</h3>
+                                    <p class="modal-agenda-subtitle">{{ $agenda->tipe ? ucfirst(str_replace('-', ' ', $agenda->tipe)) : 'Agenda Umum' }}</p>
+                                </div>
+                            </div>
+
+                            <!-- Meta Information Grid -->
+                            <div class="modal-meta-grid">
+                                <div class="modal-meta-item">
+                                    <div class="modal-meta-label">
+                                        <i class="bi bi-calendar-event"></i> Tanggal
+                                    </div>
+                                    <div class="modal-meta-value">
+                                        {{ \Carbon\Carbon::parse($agenda->tanggal)->translatedFormat('d F Y') }}
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-meta-item">
+                                    <div class="modal-meta-label">
+                                        <i class="bi bi-clock"></i> Waktu
+                                    </div>
+                                    <div class="modal-meta-value">
+                                        {{ $displayMulai ?? '—' }} - {{ $displaySelesai ?? '—' }}
+                                    </div>
+                                </div>
+
+                                @if(!empty($agenda->lokasi))
+                                <div class="modal-meta-item">
+                                    <div class="modal-meta-label">
+                                        <i class="bi bi-geo-alt"></i> Lokasi
+                                    </div>
+                                    <div class="modal-meta-value">
+                                        {{ $agenda->lokasi }}
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+
+                            <!-- Deskripsi -->
+                            @if(!empty($agenda->deskripsi))
+                            <div class="modal-detail-section">
+                                <h5>
+                                    <i class="bi bi-file-text"></i> Deskripsi
+                                </h5>
+                                <div class="modal-detail-content">
+                                    {{ $agenda->deskripsi }}
+                                </div>
+                            </div>
+                            @endif
+
+                            <!-- Keterangan Lengkap -->
+                            @if(!empty($agenda->keterangan))
+                            <div class="modal-detail-section">
+                                <h5>
+                                    <i class="bi bi-info-circle"></i> Keterangan Lengkap
+                                </h5>
+                                <div class="modal-detail-content">
+                                    {!! nl2br(e($agenda->keterangan)) !!}
+                                </div>
+                            </div>
+                            @endif
+
+                            <!-- Footer dengan Tombol -->
+                            <div class="modal-agenda-footer">
+                                <button type="button" class="btn-modal-close" data-bs-dismiss="modal" style="flex: none; width: 100%;">
+                                    <i class="bi bi-x-lg"></i> Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
 
     <!-- Footer -->
     <footer class="text-white py-5" style="background:#000000;">
@@ -1333,6 +1729,17 @@
                     setTimeout(() => {
                         ripple.remove();
                     }, 600);
+                    
+                    // Open modal - get agenda ID from data attribute
+                    const agendaId = card.dataset.agendaId;
+                    if (agendaId) {
+                        const modalId = 'agendaModal' + agendaId;
+                        const modal = document.getElementById(modalId);
+                        if (modal) {
+                            const bootstrapModal = new bootstrap.Modal(modal);
+                            bootstrapModal.show();
+                        }
+                    }
                 });
             });
         });

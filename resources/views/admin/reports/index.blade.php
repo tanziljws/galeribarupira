@@ -31,7 +31,7 @@
         .nav-divider{height:1px;background:rgba(30,64,175,0.3);margin:1rem 1.5rem;border-radius:1px}
 
         /* Main */
-        .main-content{margin-left:var(--sidebar-width);padding:2rem;min-height:100vh}
+        .main-content{margin-left:var(--sidebar-width);padding:2rem;min-height:100vh;padding-bottom:3rem}
         .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;background:#fff;padding:1.5rem 2rem;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,.08);border:1px solid var(--border-color)}
         .page-title{color:var(--dark-color);font-weight:700;font-size:1.5rem;margin:0}
         .page-date{color:var(--light-gray);font-size:.9rem;margin-top:.25rem}
@@ -110,15 +110,22 @@
             .hamburger-menu{display:flex}
             .sidebar{transform:translateX(-100%)}
             .sidebar.active{transform:translateX(0)}
-            .main-content{margin-left:0;padding:1rem;padding-top:80px}
+            .main-content{margin-left:0;padding:1rem;padding-top:80px;padding-bottom:4rem}
             .top-bar{flex-direction:column;gap:1rem;padding:1rem}
             .page-title{font-size:1.25rem}
             .stats-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
             .chart-section{padding:1rem}
             .table-section{padding:1rem;overflow-x:auto}
         }
+        @media (max-width: 600px) {
+            .main-content{padding-bottom:5rem}
+        }
         @media (max-width: 480px) {
             .stats-grid{grid-template-columns:1fr}
+            .main-content{padding-bottom:6rem}
+        }
+        @media (max-width: 360px) {
+            .main-content{padding-bottom:7rem}
         }
         
         /* Print Styles */
@@ -159,6 +166,106 @@
         .chart-section p, .table-section p {
             margin-bottom: 0.75rem !important;
             font-size: 0.85rem !important;
+        }
+
+        /* Responsive Table for Data Pengunjung */
+        @media (max-width: 768px) {
+            .table-compact th, .table-compact td {
+                padding: 0.5rem !important;
+                font-size: 0.85rem;
+            }
+            .table-compact th {
+                font-size: 0.8rem;
+            }
+            .section-title {
+                font-size: 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            .chart-section p, .table-section p {
+                margin-bottom: 0.5rem !important;
+                font-size: 0.8rem !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .table-compact {
+                font-size: 0.75rem;
+            }
+            .table-compact th, .table-compact td {
+                padding: 0.4rem !important;
+                font-size: 0.75rem;
+            }
+            .table-compact th {
+                font-size: 0.7rem;
+            }
+            .section-title {
+                font-size: 0.95rem !important;
+                margin-bottom: 0.4rem !important;
+            }
+            .chart-section p, .table-section p {
+                margin-bottom: 0.4rem !important;
+                font-size: 0.75rem !important;
+            }
+            /* Stack icon and text on mobile */
+            .table-compact tbody td:first-child {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .table-compact {
+                font-size: 0.7rem;
+            }
+            .table-compact th, .table-compact td {
+                padding: 0.35rem !important;
+                font-size: 0.7rem;
+            }
+            .table-compact th {
+                font-size: 0.65rem;
+            }
+            .section-title {
+                font-size: 0.9rem !important;
+                margin-bottom: 0.35rem !important;
+            }
+            .chart-section p, .table-section p {
+                margin-bottom: 0.35rem !important;
+                font-size: 0.7rem !important;
+            }
+            /* Adjust icon size for small mobile */
+            .table-compact tbody td:first-child div {
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 0.7rem !important;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .table-compact {
+                font-size: 0.65rem;
+            }
+            .table-compact th, .table-compact td {
+                padding: 0.3rem !important;
+                font-size: 0.65rem;
+            }
+            .table-compact th {
+                font-size: 0.6rem;
+            }
+            .section-title {
+                font-size: 0.85rem !important;
+                margin-bottom: 0.3rem !important;
+            }
+            .chart-section p, .table-section p {
+                margin-bottom: 0.3rem !important;
+                font-size: 0.65rem !important;
+            }
+            /* Adjust icon size for very small mobile */
+            .table-compact tbody td:first-child div {
+                width: 28px !important;
+                height: 28px !important;
+                font-size: 0.6rem !important;
+            }
         }
     </style>
 </head>
@@ -339,6 +446,15 @@
                             <td style="font-weight: 600; color: #1e293b; font-size: 0.9rem;">Total Pengunjung</td>
                             <td style="text-align: right; font-size: 1.3rem; font-weight: 700; color: #10b981;">{{ number_format($totalViews) }}</td>
                         </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg,#f59e0b,#d97706); display: flex; align-items: center; justify-content: center; color: white; margin: 0 auto; font-size: 0.85rem;">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                            </td>
+                            <td style="font-weight: 600; color: #1e293b; font-size: 0.9rem;">Total Download</td>
+                            <td style="text-align: right; font-size: 1.3rem; font-weight: 700; color: #f59e0b;">{{ number_format($totalDownloads ?? 0) }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -437,7 +553,7 @@
                             <th>Komentar</th>
                             <th style="width: 120px;">Tanggal</th>
                             <th style="text-align: center; width: 100px;">Status</th>
-                            <th style="text-align: center; width: 180px;">Aksi</th>
+                            <th style="text-align: center; width: 200px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -455,7 +571,7 @@
                                 <button class="btn btn-sm" style="background: #8B5CF6; color: white; padding: 0.25rem 0.5rem; font-size: 0.75rem; margin-right: 0.25rem;" onclick="markAsRead({{ $comment->id }})" title="Tandai Dibaca">
                                     <i class="fas fa-check"></i>
                                 </button>
-                                <button class="btn btn-sm" style="background: #06b6d4; color: white; padding: 0.25rem 0.5rem; font-size: 0.75rem; margin-right: 0.25rem;" onclick="replyComment({{ $comment->id }})" title="Balas">
+                                <button class="btn btn-sm" style="background: #06b6d4; color: white; padding: 0.25rem 0.5rem; font-size: 0.75rem; margin-right: 0.25rem;" onclick="openReplyModal({{ $comment->id }}, '{{ addslashes($comment->content) }}')" title="Balas">
                                     <i class="fas fa-reply"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="deleteComment({{ $comment->id }})" title="Hapus">
@@ -476,17 +592,18 @@
             </div>
         </div>
 
-        <!-- 5. Data Bookmark -->
+        <!-- 5. Data Bookmark & Download -->
         <div class="chart-section mb-4">
-            <h3 class="section-title">5. Data Bookmark</h3>
-            <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.9rem;">Foto yang paling banyak disimpan oleh pengguna</p>
+            <h3 class="section-title">5. Data Bookmark & Download</h3>
+            <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.9rem;">Foto yang paling banyak disimpan dan diunduh oleh pengguna</p>
             <div class="table-responsive">
                 <table class="table table-hover table-compact">
                     <thead>
                         <tr>
                             <th style="width: 60px;">Foto</th>
                             <th>Judul Foto</th>
-                            <th style="text-align: center; width: 140px;">Jumlah Disimpan</th>
+                            <th style="text-align: center; width: 120px;">Jumlah Disimpan</th>
+                            <th style="text-align: center; width: 120px;">Jumlah Download</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -513,14 +630,19 @@
                             </td>
                             <td style="font-weight: 600; color: #1e293b;">{{ Str::limit($photo->judul, 60) }}</td>
                             <td style="text-align: center;">
-                                <span class="badge" style="background: #ede9fe; color: #5b21b6; font-size: 1.1rem; padding: 0.6rem 1.2rem;">
-                                    <i class="fas fa-bookmark"></i> {{ number_format($photo->bookmark_count) }} kali
+                                <span class="badge" style="background: #ede9fe; color: #5b21b6; font-size: 0.95rem; padding: 0.5rem 1rem;">
+                                    <i class="fas fa-bookmark"></i> {{ number_format($photo->bookmark_count ?? 0) }}
+                                </span>
+                            </td>
+                            <td style="text-align: center;">
+                                <span class="badge" style="background: #fef3c7; color: #92400e; font-size: 0.95rem; padding: 0.5rem 1rem;">
+                                    <i class="fas fa-download"></i> {{ number_format($photo->download_count ?? 0) }}
                                 </span>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="3" style="text-align: center; padding: 2rem; color: #64748b;">
+                            <td colspan="4" style="text-align: center; padding: 2rem; color: #64748b;">
                                 <i class="fas fa-bookmark" style="font-size: 2rem; opacity: 0.3; display: block; margin-bottom: 0.5rem;"></i>
                                 Belum ada foto yang di-bookmark dalam periode ini
                             </td>
@@ -608,8 +730,13 @@
                         @foreach($activeUsers as $user)
                         <tr>
                             <td style="font-weight: 600; color: #1e293b;">
-                                <i class="fas fa-user-circle" style="color: #6366f1; margin-right: 0.5rem;"></i>
-                                User #{{ $user->user_id }}
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-user-circle" style="color: #6366f1; font-size: 1.2rem;"></i>
+                                    <div>
+                                        <div style="font-weight: 700; color: #1e293b;">{{ $user->user_name }}</div>
+                                        <div style="font-size: 0.8rem; color: #64748b; font-weight: 400;">{{ $user->user_email }}</div>
+                                    </div>
+                                </div>
                             </td>
                             <td style="text-align: center;">
                                 <span class="badge badge-like" style="font-size: 0.85rem;">{{ number_format($user->likes_given) }}</span>
@@ -632,7 +759,7 @@
         @endif
 
         <!-- 8. Aktivitas Terbaru -->
-        <div class="table-section">
+        <div class="table-section mb-5">
             <h3 class="section-title">8. Aktivitas Terbaru</h3>
             <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.9rem;">8 aktivitas terakhir untuk audit dan keamanan</p>
             <div class="table-responsive">
@@ -689,7 +816,84 @@
                 </table>
             </div>
         </div>
+        <!-- 9. Data Pengunjung -->
+        <div class="table-section mb-4">
+            <h3 class="section-title">9. Data Pengunjung</h3>
+            <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.9rem;">Statistik pengunjung halaman beranda dalam periode yang dipilih</p>
+            <div class="table-responsive">
+                <table class="table table-hover table-compact">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center;">Icon</th>
+                            <th>Keterangan</th>
+                            <th style="text-align: right; width: 150px;">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">
+                                <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg,#10b981,#059669); display: flex; align-items: center; justify-content: center; color: white; margin: 0 auto; font-size: 0.85rem;">
+                                    <i class="fas fa-user-group"></i>
+                                </div>
+                            </td>
+                            <td style="font-weight: 600; color: #1e293b; font-size: 0.9rem;">Total Kunjungan Halaman Beranda</td>
+                            <td style="text-align: right; font-size: 1.3rem; font-weight: 700; color: #10b981;">{{ number_format($totalViews) }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg,#3b82f6,#1d4ed8); display: flex; align-items: center; justify-content: center; color: white; margin: 0 auto; font-size: 0.85rem;">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </td>
+                            <td style="font-weight: 600; color: #1e293b; font-size: 0.9rem;">Pengunjung Terdaftar</td>
+                            <td style="text-align: right; font-size: 1.3rem; font-weight: 700; color: #3b82f6;">{{ number_format($registeredVisitors ?? 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg,#8b5cf6,#7c3aed); display: flex; align-items: center; justify-content: center; color: white; margin: 0 auto; font-size: 0.85rem;">
+                                    <i class="fas fa-user-secret"></i>
+                                </div>
+                            </td>
+                            <td style="font-weight: 600; color: #1e293b; font-size: 0.9rem;">Pengunjung Tamu (Guest)</td>
+                            <td style="text-align: right; font-size: 1.3rem; font-weight: 700; color: #8b5cf6;">{{ number_format($guestVisitors ?? 0) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
+
+    <!-- Modal Balas Komentar -->
+    <div class="modal fade" id="replyCommentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 16px; border: none;">
+                <div class="modal-header" style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; border-radius: 16px 16px 0 0;">
+                    <h5 class="modal-title"><i class="fas fa-reply"></i> Balas Komentar</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="padding: 2rem;">
+                    <div style="background: #f0f9ff; padding: 1rem; border-radius: 8px; border-left: 4px solid #0ea5e9; margin-bottom: 1.5rem;">
+                        <p style="margin: 0; color: #0c4a6e; font-size: 0.9rem;"><strong>Komentar dari User:</strong></p>
+                        <p id="originalComment" style="margin: 0.5rem 0 0 0; color: #1e293b; font-style: italic;"></p>
+                    </div>
+                    <form id="replyForm">
+                        <div class="form-group">
+                            <label for="replyText" style="font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">Balasan Anda:</label>
+                            <textarea id="replyText" class="form-control" rows="4" placeholder="Tulis balasan untuk komentar ini..." style="border-radius: 8px; border: 1px solid #e2e8f0; padding: 0.75rem;"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #e2e8f0; padding: 1.5rem; background: #f8fafc;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="submitReply()" style="background: #06b6d4; border: none;">
+                        <i class="fas fa-paper-plane"></i> Kirim Balasan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Detail Laporan -->
     <div class="modal fade" id="reportDetailModal" tabindex="-1">
@@ -1686,6 +1890,76 @@
                 });
             });
         });
+
+        // Reply Comment Functions
+        let currentCommentId = null;
+
+        function openReplyModal(commentId, commentText) {
+            currentCommentId = commentId;
+            document.getElementById('originalComment').textContent = commentText;
+            document.getElementById('replyText').value = '';
+            const modal = new bootstrap.Modal(document.getElementById('replyCommentModal'));
+            modal.show();
+        }
+
+        function submitReply() {
+            const replyText = document.getElementById('replyText').value.trim();
+            
+            if (!replyText) {
+                Swal.fire('Peringatan', 'Silakan tulis balasan terlebih dahulu', 'warning');
+                return;
+            }
+
+            if (replyText.length < 5) {
+                Swal.fire('Peringatan', 'Balasan minimal 5 karakter', 'warning');
+                return;
+            }
+
+            // Show loading
+            Swal.fire({
+                title: 'Mengirim balasan...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Send AJAX request to save reply
+            fetch(`/admin/comments/${currentCommentId}/reply`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    reply_text: replyText
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '✅ Balasan Terkirim',
+                        text: 'Balasan Anda telah berhasil dikirim ke user',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('replyCommentModal'));
+                        modal.hide();
+                        // Optional: reload page to show updated data
+                        // location.reload();
+                    });
+                } else {
+                    Swal.fire('Error', data.message || 'Gagal mengirim balasan', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'Terjadi kesalahan sistem', 'error');
+            });
+        }
 
         // Hamburger menu toggle
         const hamburger=document.getElementById('hamburgerMenu');

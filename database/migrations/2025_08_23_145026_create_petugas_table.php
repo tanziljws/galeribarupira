@@ -30,6 +30,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Disable foreign key checks before dropping
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('petugas');
+        Schema::enableForeignKeyConstraints();
     }
 };

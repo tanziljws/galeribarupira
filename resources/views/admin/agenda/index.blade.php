@@ -980,6 +980,8 @@
                     
                     // Only reset if it's not an edit button
                     if (!this.dataset.id) {
+                        console.log('Opening add agenda modal');
+                        
                         // Get form elements once
                         const form = document.getElementById('agendaForm');
                         const modalTitle = document.getElementById('addAgendaModalLabel');
@@ -993,8 +995,17 @@
                         form.querySelector('input[name="lokasi"]').value = '';
                         form.querySelector('select[name="status"]').value = 'aktif';
                         
-                        // Set form action for new agenda
-                        setFormAction(null);
+                        // Remove any existing _method input
+                        const existingMethod = form.querySelector('input[name="_method"]');
+                        if (existingMethod) {
+                            existingMethod.remove();
+                        }
+                        
+                        // Set form action for new agenda (POST to store)
+                        form.action = "{{ route('admin.agenda.store') }}";
+                        form.method = 'POST';
+                        
+                        console.log('Form action set to:', form.action);
                         
                         // Update modal title
                         modalTitle.innerHTML = '<i class="fas fa-plus me-2"></i>Tambah Agenda Baru';
@@ -1009,18 +1020,30 @@
                     
                     const agendaId = this.dataset.id;
                     const form = document.getElementById('editAgendaForm');
-                    form.action = `/admin/agenda/${agendaId}`;
                     
-                    // Fetch agenda data from server
-                    fetch(`/admin/agenda/${agendaId}`, {
+                    console.log('Edit button clicked for agenda:', agendaId);
+                    
+                    // Fetch agenda data from server with cache-busting
+                    fetch(`/admin/agenda/${agendaId}?t=${Date.now()}`, {
                         method: 'GET',
                         headers: {
                             'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
                         }
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
+                        console.log('Fetched data:', data);
+                        
                         // Populate form with fetched data
                         form.querySelector('input[name="judul"]').value = data.judul || '';
                         form.querySelector('input[name="tanggal"]').value = data.tanggal || '';
@@ -1030,16 +1053,56 @@
                         form.querySelector('input[name="lokasi"]').value = data.lokasi || '';
                         form.querySelector('select[name="status"]').value = data.status || 'aktif';
                         
+                        // Set form action with PUT method
+                        form.action = `/admin/agenda/${agendaId}`;
+                        form.method = 'POST';
+                        
+                        // Ensure PUT method is set
+                        let methodInput = form.querySelector('input[name="_method"]');
+                        if (!methodInput) {
+                            methodInput = document.createElement('input');
+                            methodInput.type = 'hidden';
+                            methodInput.name = '_method';
+                            methodInput.value = 'PUT';
+                            form.appendChild(methodInput);
+                        } else {
+                            methodInput.value = 'PUT';
+                        }
+                        
+                        console.log('Form action set to:', form.action, 'with method PUT');
+                        
                         // Show the edit modal
                         const modal = new bootstrap.Modal(document.getElementById('editAgendaModal'));
                         modal.show();
                     })
                     .catch(error => {
                         console.error('Error fetching agenda:', error);
-                        alert('Gagal memuat data agenda');
+                        alert('Gagal memuat data agenda: ' + error.message);
                     });
                 });
             });
+            
+            // Form submit handler - refresh page after successful submit
+            const agendaForm = document.getElementById('agendaForm');
+            const editAgendaForm = document.getElementById('editAgendaForm');
+            
+            if (agendaForm) {
+                agendaForm.addEventListener('submit', function(e) {
+                    // Let form submit normally, then refresh after a short delay
+                    setTimeout(() => {
+                        location.reload();
+                    }, 500);
+                });
+            }
+            
+            if (editAgendaForm) {
+                editAgendaForm.addEventListener('submit', function(e) {
+                    // Let form submit normally, then refresh after a short delay
+                    setTimeout(() => {
+                        location.reload();
+                    }, 500);
+                });
+            }
             
             // Delete button functionality
             document.querySelectorAll('.delete-agenda').forEach(btn => {

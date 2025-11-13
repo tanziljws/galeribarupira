@@ -128,10 +128,26 @@ class OtpController extends Controller
 
         // Kirim email OTP
         try {
+            \Log::info('Attempting to resend OTP email', [
+                'email' => $user->email,
+                'otp_code' => $otpCode,
+                'user_id' => $userId,
+                'mail_mailer' => config('mail.default'),
+                'mail_host' => config('mail.mailers.smtp.host'),
+                'mail_port' => config('mail.mailers.smtp.port'),
+            ]);
+            
             \Mail::to($user->email)->send(new \App\Mail\SendOtpMail($otpCode, $user->name));
+            
+            \Log::info('OTP email resent successfully', ['email' => $user->email]);
             return back()->with('success', 'Kode OTP baru telah dikirim ke email Anda.');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Gagal mengirim email. Silakan coba lagi.']);
+            \Log::error('Failed to resend OTP email', [
+                'email' => $user->email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return back()->withErrors(['error' => 'Gagal mengirim email. Silakan coba lagi. Error: ' . $e->getMessage()]);
         }
     }
 }

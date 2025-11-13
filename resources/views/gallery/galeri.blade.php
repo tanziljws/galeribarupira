@@ -1123,14 +1123,15 @@
         .gallery-action-bar {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             padding: 0.75rem 0;
             margin-top: 0.5rem;
-            gap: 0.5rem;
+            gap: 0.75rem;
             border-top: 1px solid #e5e7eb;
             position: relative;
             z-index: 100;
             pointer-events: auto;
+            width: 100%;
         }
         
         .gallery-action-group {
@@ -1138,6 +1139,7 @@
             align-items: center;
             gap: 1.5rem;
             pointer-events: auto;
+            margin-right: auto;
         }
         
         .gallery-comment-btn {
@@ -1155,15 +1157,15 @@
             font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer !important;
-            padding: 0.5rem;
+            padding: 0.5rem 0.6rem;
             border-radius: 4px;
             transition: all 0.2s ease;
             position: relative;
             z-index: 200;
             pointer-events: auto !important;
             -webkit-tap-highlight-color: transparent;
-            min-width: 40px;
-            min-height: 40px;
+            min-width: 44px;
+            min-height: 44px;
             justify-content: center;
         }
         
@@ -1185,6 +1187,12 @@
         .gallery-comment-btn .action-btn {
             margin-left: auto;
             pointer-events: auto;
+        }
+        
+        /* Bookmark button always on the right */
+        .bookmark-btn {
+            margin-left: auto !important;
+            pointer-events: auto !important;
         }
 
         .action-btn i {
@@ -1298,14 +1306,42 @@
             }
             
             .gallery-action-bar {
-                gap: 0.3rem;
+                gap: 0.6rem;
+                padding: 0.75rem 0;
             }
             
             .action-btn {
-                flex: 1;
                 justify-content: center;
-                padding: 0.4rem 0.3rem;
+                padding: 0.5rem 0.4rem;
+                font-size: 0.8rem;
+                min-width: 42px;
+                min-height: 42px;
+            }
+            
+            .action-btn i {
+                font-size: 1.3rem;
+            }
+            
+            .action-btn span {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-action-bar {
+                gap: 0.5rem;
+                padding: 0.75rem 0;
+            }
+            
+            .action-btn {
+                padding: 0.45rem 0.35rem;
                 font-size: 0.75rem;
+                min-width: 40px;
+                min-height: 40px;
+            }
+            
+            .action-btn i {
+                font-size: 1.2rem;
             }
             
             .action-btn span {
@@ -1315,16 +1351,45 @@
 
         @media (max-width: 480px) {
             .gallery-action-buttons {
-                gap: 0.25rem;
+                gap: 0.4rem;
+            }
+            
+            .gallery-action-bar {
+                gap: 0.4rem;
+                padding: 0.75rem 0;
             }
             
             .action-btn {
-                padding: 0.3rem 0.2rem;
+                padding: 0.4rem 0.3rem;
                 font-size: 0.7rem;
+                min-width: 38px;
+                min-height: 38px;
             }
             
             .action-btn i {
-                font-size: 0.8rem;
+                font-size: 1.1rem;
+            }
+            
+            .action-btn span {
+                font-size: 0.7rem;
+            }
+        }
+        
+        @media (max-width: 380px) {
+            .gallery-action-bar {
+                gap: 0.35rem;
+                padding: 0.6rem 0;
+            }
+            
+            .action-btn {
+                padding: 0.35rem 0.25rem;
+                font-size: 0.65rem;
+                min-width: 36px;
+                min-height: 36px;
+            }
+            
+            .action-btn i {
+                font-size: 1rem;
             }
             
             .action-btn span {
@@ -1785,6 +1850,407 @@
                 border-radius: 0 0 12px 12px;
             }
         }
+
+        /* Photo Modal Pop-up Styles */
+        .photo-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .photo-modal-backdrop.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .photo-modal-container {
+            position: relative;
+            width: 100%;
+            max-width: 85vw;
+            max-height: 85vh;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            animation: slideUp 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .photo-modal-image {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            flex: 1;
+        }
+
+        .photo-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #000;
+            z-index: 2010;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-modal-close:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+
+        .photo-modal-info {
+            position: relative;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 20px 20px 15px;
+            z-index: 2005;
+            min-height: auto;
+        }
+
+        .photo-modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .photo-modal-stats {
+            display: none;
+        }
+
+        .photo-modal-stat-item {
+            display: none;
+        }
+
+        .photo-modal-stat-item i {
+            display: none;
+        }
+
+        .photo-modal-stat-count {
+            display: none;
+        }
+
+        .photo-modal-actions {
+            display: none;
+        }
+
+        .photo-modal-action-btn {
+            display: none;
+        }
+
+        .photo-modal-action-btn.liked i {
+            display: none;
+        }
+
+        .photo-modal-action-btn.bookmarked i {
+            display: none;
+        }
+
+        .photo-modal-action-btn#photoModalViewsBtn {
+            display: none;
+        }
+
+        .photo-modal-action-btn#photoModalViewsBtn:hover {
+            display: none;
+        }
+
+        /* Responsive Photo Modal */
+        @media (max-width: 768px) {
+            .photo-modal-backdrop {
+                padding: 15px;
+            }
+
+            .photo-modal-container {
+                max-width: 95vw;
+                max-height: 90vh;
+                border-radius: 10px;
+            }
+
+            .photo-modal-image {
+                max-height: 65vh;
+            }
+
+            .photo-modal-close {
+                top: 12px;
+                right: 12px;
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+
+            .photo-modal-info {
+                padding: 18px 18px 12px;
+            }
+
+            .photo-modal-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-modal-backdrop {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 60px;
+            }
+
+            .photo-modal-container {
+                max-width: 100vw;
+                max-height: 85vh;
+                border-radius: 8px;
+            }
+
+            .photo-modal-image {
+                max-height: 60vh;
+            }
+
+            .photo-modal-close {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .photo-modal-info {
+                padding: 15px 15px 10px;
+            }
+
+            .photo-modal-title {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .photo-modal-backdrop {
+                padding: 8px;
+                padding-top: 50px;
+            }
+
+            .photo-modal-container {
+                max-width: 100vw;
+                border-radius: 6px;
+            }
+
+            .photo-modal-image {
+                max-height: 55vh;
+            }
+
+            .photo-modal-close {
+                top: 8px;
+                right: 8px;
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .photo-modal-info {
+                padding: 12px 12px 8px;
+            }
+
+            .photo-modal-title {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Login Popup Modal */
+        .login-popup-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            max-width: 500px;
+            width: 90%;
+            animation: popIn 0.3s ease;
+            display: none;
+        }
+
+        .login-popup-modal.show {
+            display: block;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .login-popup-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2999;
+            display: none;
+        }
+
+        .login-popup-backdrop.show {
+            display: block;
+        }
+
+        .login-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .login-popup-icon {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-popup-icon i {
+            font-size: 3rem;
+            color: #1E40AF;
+        }
+
+        .login-popup-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .login-popup-message {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .login-popup-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-popup-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .login-popup-btn-primary {
+            background: linear-gradient(135deg, #1E40AF 0%, #1e3a8a 100%);
+            color: white;
+        }
+
+        .login-popup-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+        }
+
+        .login-popup-btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .login-popup-btn-secondary:hover {
+            background: #e8e8e8;
+        }
+
+        /* Views Button Styling */
+        .action-btn.views-btn {
+            color: #262626;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-btn.views-btn:hover {
+            color: #1f6fd6;
+            transform: scale(1.1);
+        }
+
+        .action-btn.views-btn i {
+            font-size: 1.1rem;
+        }
+
+        .views-count-badge {
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: auto;
+            text-align: center;
+        }
+
+        /* Views Count Text */
+        .views-count-text {
+            transition: all 0.3s ease;
+        }
+
+        .views-count-text:hover {
+            color: #1f6fd6 !important;
+        }
     </style>
 </head>
 <body>
@@ -1952,8 +2418,8 @@
                                         <i class="bi bi-chat" style="pointer-events: none !important;"></i>
                                     </button>
                                 </div>
-                                <button class="action-btn bookmark-btn" data-foto-id="{{ $foto->id }}" data-action="bookmark" title="Simpan" style="pointer-events: auto !important;">
-                                    <i class="bi bi-bookmark" style="pointer-events: none !important;"></i>
+                                <button class="action-btn bookmark-btn {{ $foto->is_bookmarked_by_user ?? false ? 'bookmarked' : '' }}" data-foto-id="{{ $foto->id }}" data-action="bookmark" title="Simpan" style="pointer-events: auto !important;">
+                                    <i class="bi {{ $foto->is_bookmarked_by_user ?? false ? 'bi-bookmark-fill' : 'bi-bookmark' }}" style="pointer-events: none !important;"></i>
                                 </button>
                             </div>
                             
@@ -2007,6 +2473,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Photo Modal Pop-up Backdrop -->
+    <div class="photo-modal-backdrop" id="photoModalBackdrop">
+        <div class="photo-modal-container">
+            <button class="photo-modal-close" onclick="closePhotoModal()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            
+            <img id="photoModalImage" class="photo-modal-image" src="" alt="Foto">
+            
+            <!-- Photo Info Section -->
+            <div class="photo-modal-info">
+                <h3 class="photo-modal-title" id="photoModalTitle">Judul Foto</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Popup Modal -->
+    <div class="login-popup-backdrop" id="loginPopupBackdrop"></div>
+    <div class="login-popup-modal" id="loginPopupModal">
+        <button class="login-popup-close" onclick="closeLoginPopup()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <div class="login-popup-icon">
+            <i class="bi bi-lock"></i>
+        </div>
+        <h2 class="login-popup-title">Login Diperlukan</h2>
+        <p class="login-popup-message">
+            Anda harus login terlebih dahulu untuk dapat menyukai, berkomentar, dan menyimpan foto favorit Anda.
+        </p>
+        <div class="login-popup-buttons">
+            <button class="login-popup-btn login-popup-btn-secondary" onclick="closeLoginPopup()">
+                Batal
+            </button>
+            <button class="login-popup-btn login-popup-btn-primary" onclick="redirectToLogin()">
+                Login Sekarang
+            </button>
         </div>
     </div>
 
@@ -4253,6 +4758,170 @@
                     navbar.classList.remove('scrolled');
                 }
             }
+        });
+
+        // ===== PHOTO MODAL POP-UP FUNCTIONS =====
+        let currentPhotoData = null;
+
+        // Open Photo Modal
+        function openPhotoModalPopup(fotoId) {
+            const card = document.querySelector(`.gallery-card[data-foto-id="${fotoId}"]`);
+            if (!card) return;
+
+            const imageUrl = card.dataset.imageUrl;
+            const title = card.dataset.judul;
+            const likesCount = card.querySelector('.likes-count')?.textContent || '0';
+            const viewsCount = card.querySelector('.views-count')?.textContent || '0';
+            const isLiked = card.querySelector('.like-btn')?.classList.contains('liked') || false;
+            const isBookmarked = card.querySelector('.bookmark-btn')?.classList.contains('bookmarked') || false;
+
+            currentPhotoData = {
+                fotoId: fotoId,
+                imageUrl: imageUrl,
+                title: title,
+                likesCount: likesCount,
+                viewsCount: viewsCount,
+                isLiked: isLiked,
+                isBookmarked: isBookmarked
+            };
+
+            // Update modal content
+            const photoModalImage = document.getElementById('photoModalImage');
+            const photoModalTitle = document.getElementById('photoModalTitle');
+            
+            if (photoModalImage) photoModalImage.src = imageUrl;
+            if (photoModalTitle) photoModalTitle.textContent = title;
+
+            // Show modal
+            const backdrop = document.getElementById('photoModalBackdrop');
+            if (backdrop) {
+                backdrop.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Close Photo Modal
+        function closePhotoModal() {
+            const backdrop = document.getElementById('photoModalBackdrop');
+            if (backdrop) {
+                backdrop.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+            currentPhotoData = null;
+        }
+
+        // Handle Photo Modal Like
+        function handlePhotoModalLike() {
+            if (!isUserLoggedIn) {
+                showLoginPopup();
+                return;
+            }
+
+            if (!currentPhotoData) return;
+
+            const likeBtn = document.getElementById('photoModalLikeBtn');
+            const isLiked = likeBtn.classList.contains('liked');
+
+            // Toggle like state
+            if (isLiked) {
+                likeBtn.classList.remove('liked');
+                likeBtn.querySelector('i').classList.add('bi-heart');
+                likeBtn.querySelector('i').classList.remove('bi-heart-fill');
+                currentPhotoData.likesCount = Math.max(0, parseInt(currentPhotoData.likesCount) - 1);
+            } else {
+                likeBtn.classList.add('liked');
+                likeBtn.querySelector('i').classList.remove('bi-heart');
+                likeBtn.querySelector('i').classList.add('bi-heart-fill');
+                currentPhotoData.likesCount = parseInt(currentPhotoData.likesCount) + 1;
+            }
+
+            document.getElementById('photoModalLikes').textContent = currentPhotoData.likesCount;
+
+            // Call the actual like function from galeri-actions.js
+            window.handleLike(currentPhotoData.fotoId, null);
+        }
+
+        // Handle Photo Modal Comment
+        function handlePhotoModalComment() {
+            if (!isUserLoggedIn) {
+                showLoginPopup();
+                return;
+            }
+
+            if (!currentPhotoData) return;
+
+            // Call the actual comment function from galeri-actions.js
+            window.handleComment(currentPhotoData.fotoId, null);
+        }
+
+        // Handle Photo Modal Bookmark
+        function handlePhotoModalBookmark() {
+            if (!isUserLoggedIn) {
+                showLoginPopup();
+                return;
+            }
+
+            if (!currentPhotoData) return;
+
+            const bookmarkBtn = document.getElementById('photoModalBookmarkBtn');
+            const isBookmarked = bookmarkBtn.classList.contains('bookmarked');
+
+            // Toggle bookmark state
+            if (isBookmarked) {
+                bookmarkBtn.classList.remove('bookmarked');
+                bookmarkBtn.querySelector('i').classList.add('bi-bookmark');
+                bookmarkBtn.querySelector('i').classList.remove('bi-bookmark-fill');
+            } else {
+                bookmarkBtn.classList.add('bookmarked');
+                bookmarkBtn.querySelector('i').classList.remove('bi-bookmark');
+                bookmarkBtn.querySelector('i').classList.add('bi-bookmark-fill');
+            }
+
+            // Call the actual bookmark function from galeri-actions.js
+            window.handleBookmark(currentPhotoData.fotoId, null);
+        }
+
+        // ===== LOGIN POPUP FUNCTIONS =====
+        function showLoginPopup() {
+            document.getElementById('loginPopupBackdrop').classList.add('show');
+            document.getElementById('loginPopupModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLoginPopup() {
+            document.getElementById('loginPopupBackdrop').classList.remove('show');
+            document.getElementById('loginPopupModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function redirectToLogin() {
+            sessionStorage.setItem('intended_url', window.location.href);
+            window.location.href = '/login';
+        }
+
+        // Close login popup when clicking backdrop
+        document.getElementById('loginPopupBackdrop')?.addEventListener('click', closeLoginPopup);
+
+        // ===== GALLERY CARD CLICK HANDLER =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handler untuk gallery-media (foto area)
+            document.querySelectorAll('.gallery-media').forEach(media => {
+                media.addEventListener('click', function(e) {
+                    // Jangan buka modal jika klik pada button atau menu
+                    if (e.target.closest('.action-btn') || 
+                        e.target.closest('.gallery-top-menu') ||
+                        e.target.closest('.gallery-action-bar')) {
+                        return;
+                    }
+
+                    // Ambil foto ID dari parent card
+                    const card = this.closest('.gallery-card');
+                    if (card) {
+                        const fotoId = card.dataset.fotoId;
+                        openPhotoModalPopup(fotoId);
+                    }
+                });
+            });
         });
     </script>
 
