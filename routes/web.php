@@ -137,8 +137,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/suggestions/{id}/reply', [AdminController::class, 'suggestionsReply'])->name('suggestions.reply');
     Route::delete('/suggestions/{id}', [AdminController::class, 'suggestionsDestroy'])->name('suggestions.destroy');
     
-    // Logout
+    // Logout (support both GET and POST)
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AdminController::class, 'logout'])->name('logout.post');
     });
 });
 Route::get('/tim', [GalleryController::class, 'tim'])->name('gallery.tim');
@@ -184,15 +185,12 @@ Route::middleware(['web'])->group(function () {
     Route::get('/petugas/{id}', [GalleryController::class, 'getPetugas'])->name('petugas.show');
 });
 
-// Admin Login & Register Routes
-Route::get('/admin/login', [AdminController::class, 'showLogin'])->name('admin.login');
-Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');
+// Admin Register Routes (login and logout are already defined in the prefix group above)
 Route::get('/admin/register', [AdminController::class, 'showRegister'])->name('admin.register');
 Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register.post');
-Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 // Admin Routes (Protected)
 Route::prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    // Dashboard route is already defined in the main admin prefix group above
     
     // Foto Management
     Route::get('/foto', [AdminController::class, 'fotoIndex'])->name('admin.foto.index');
@@ -233,12 +231,8 @@ Route::prefix('admin')->group(function () {
 
 // Admin Routes (Protected - Require Admin Login)
 Route::middleware(['check.admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/admin/photos', [AdminController::class, 'photosIndex'])->name('admin.photos');
-    Route::get('/admin/photos/index', [AdminController::class, 'photosIndex'])->name('admin.photos.index');
-    Route::get('/admin/suggestions', [AdminController::class, 'suggestionsIndex'])->name('admin.suggestions');
-    Route::get('/admin/petugas', [AdminController::class, 'petugasIndex'])->name('admin.petugas');
-    Route::get('/admin/petugas/index', [AdminController::class, 'petugasIndex'])->name('admin.petugas.index');
+    // Dashboard, photos, suggestions, and petugas routes are already defined in the main admin prefix group above
+    // Only keeping unique routes here
     Route::get('/admin/reports', [AdminController::class, 'reportsIndex'])->name('admin.reports');
     Route::post('/admin/reports/{id}/complete', [AdminController::class, 'reportMarkCompleted'])->name('admin.reports.complete');
     Route::delete('/admin/reports/{id}', [AdminController::class, 'reportDelete'])->name('admin.reports.delete');
