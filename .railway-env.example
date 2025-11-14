@@ -1,0 +1,35 @@
+# Railway Database Connection
+# Copy dari Railway Dashboard → Database Service → Variables
+
+DB_CONNECTION=mysql
+DB_HOST=containers-us-west-xxx.railway.app
+DB_PORT=6379
+DB_DATABASE=railway
+DB_USERNAME=root
+DB_PASSWORD=xxxxxxxxxx
+
+# ATAU pakai DATABASE_URL (lebih simple, auto-generate di Railway)
+# DATABASE_URL=mysql://root:password@host:port/railway
+
+# App Settings
+APP_NAME="Pira Gallery"
+APP_ENV=production
+APP_KEY=base64:xxxxx
+APP_DEBUG=false
+APP_URL=https://your-app.railway.app
+
+# Mail Settings (sesuaikan dengan Railway)
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="noreply@piragallery.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+# Session & Cache
+SESSION_DRIVER=database
+CACHE_DRIVER=database
+QUEUE_CONNECTION=database
+
